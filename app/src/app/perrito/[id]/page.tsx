@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getDogById, paras, showDonate } from "@/lib/dogs";
 import { whatsappAdoptLink } from "@/lib/constants";
+import { getBeforeAfter, getGallery } from "@/lib/dogAssets";
 import BeforeAfter from "@/components/dogs/BeforeAfter";
 import DogFacts from "@/components/dogs/DogFacts";
 import SponsorshipCard from "@/components/dogs/SponsorshipCard";
@@ -30,6 +31,8 @@ export default async function PerritoPage({ params }: PageProps) {
 
   const paragraphs = paras(dog.historia);
   const canDonate = showDonate(dog);
+  const { before, after } = getBeforeAfter(dog.id);
+  const gallery = getGallery(dog.id);
 
   return (
     <section className="max-w-5xl mx-auto px-5 py-11 md2:py-14">
@@ -39,7 +42,7 @@ export default async function PerritoPage({ params }: PageProps) {
       </Link>
 
       {/* Before/After */}
-      <BeforeAfter antes={dog.antes} ahora={dog.ahora} />
+      <BeforeAfter antes={before} ahora={after} />
 
       {/* Main content grid */}
       <div className="grid grid-cols-1 md2:grid-cols-3 gap-8 md2:gap-7">
@@ -83,7 +86,7 @@ export default async function PerritoPage({ params }: PageProps) {
       </div>
 
       {/* Gallery */}
-      {dog.gallery.length > 0 && <DogGallery images={dog.gallery} name={dog.name} />}
+      {gallery.length > 0 && <DogGallery images={gallery} name={dog.name} />}
     </section>
   );
 }

@@ -62,11 +62,12 @@ export default function Page() {
           <div className="font-display font-extrabold text-lg text-teal mb-3.5">Síguenos en Instagram</div>
           <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="block mb-3">
             <Image
-              src="/instagram-qr.jpeg"
+              src="/assets/instagram-qr.jpeg"
               alt="QR de Instagram"
               width={280}
               height={280}
               className="w-full max-w-xs mx-auto rounded-row"
+              priority
             />
           </a>
           <a

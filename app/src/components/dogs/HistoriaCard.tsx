@@ -2,8 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { excerpt } from "@/lib/helpers";
 import type { Dog } from "@/lib/types";
+import { getBeforeAfter } from "@/lib/dogAssets";
+import DogPlaceholder from "./DogPlaceholder";
 
 export default function HistoriaCard({ dog }: { dog: Dog }) {
+  const images = getBeforeAfter(dog.id);
+
   return (
     <Link
       href={`/perrito/${dog.id}`}
@@ -13,16 +17,20 @@ export default function HistoriaCard({ dog }: { dog: Dog }) {
       <div className="grid grid-cols-2 gap-0">
         {/* Before */}
         <div className="relative aspect-square overflow-hidden bg-text-muted/5">
-          {dog.antes ? (
-            <Image src={dog.antes} alt="Antes" fill className="object-cover" />
-          ) : null}
+          {images.before ? (
+            <Image src={images.before} alt="Antes" fill className="object-cover" />
+          ) : (
+            <DogPlaceholder name={dog.name} />
+          )}
         </div>
 
         {/* After */}
         <div className="relative aspect-square overflow-hidden bg-text-muted/5">
-          {dog.ahora ? (
-            <Image src={dog.ahora} alt="Ahora" fill className="object-cover" />
-          ) : null}
+          {images.after ? (
+            <Image src={images.after} alt="Ahora" fill className="object-cover" />
+          ) : (
+            <DogPlaceholder name={dog.name} />
+          )}
         </div>
       </div>
 

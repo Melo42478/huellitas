@@ -27,16 +27,16 @@ export default function HeroSection() {
             familia paciente y amorosa. Conoce sus historias y su increíble transformación.
           </p>
 
-          <div className="flex flex-col md2:flex-row flex-wrap gap-3.5">
+          <div className="flex flex-wrap gap-3.5">
             <Link
               href="/galeria"
-              className="text-center bg-teal text-white font-display font-extrabold px-7 py-3.5 rounded-pill hover:bg-teal-dark transition-colors"
+              className="inline-block bg-teal text-white font-display font-extrabold px-7 py-3.5 rounded-pill hover:bg-teal-dark transition-colors"
             >
               Conoce a los perritos
             </Link>
             <Link
               href="/donaciones"
-              className="text-center bg-white text-teal font-display font-extrabold px-7 py-3.5 rounded-pill border-2 border-teal hover:bg-teal-soft transition-colors"
+              className="inline-block bg-transparent text-teal border-2 border-teal font-display font-extrabold px-7 py-3.5 rounded-pill hover:bg-teal-soft transition-colors"
             >
               Quiero ayudar ♥
             </Link>
@@ -46,11 +46,12 @@ export default function HeroSection() {
         {/* Right: Logo */}
         <div className="hidden md2:flex justify-center items-center">
           <Image
-            src="/logo.png"
+            src="/assets/logo.png"
             alt="Huellitas Arcoíris"
             width={380}
             height={380}
             className="w-full max-w-xs animate-floaty drop-shadow-lg"
+            priority
           />
         </div>
       </div>

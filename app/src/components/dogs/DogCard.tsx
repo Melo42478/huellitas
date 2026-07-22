@@ -2,9 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { excerpt, metaLine } from "@/lib/helpers";
 import type { Dog } from "@/lib/types";
+import { getImageUrl } from "@/lib/dogAssets";
 import StatusBadge from "./StatusBadge";
+import DogPlaceholder from "./DogPlaceholder";
 
 export default function DogCard({ dog }: { dog: Dog }) {
+  const imageUrl = getImageUrl(dog.id);
+
   return (
     <Link
       href={`/perrito/${dog.id}`}
@@ -12,12 +16,16 @@ export default function DogCard({ dog }: { dog: Dog }) {
     >
       {/* Image with status badge */}
       <div className="relative aspect-square overflow-hidden bg-text-muted/5">
-        <Image
-          src={dog.ahora || ""}
-          alt={dog.name}
-          fill
-          className="object-cover"
-        />
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={dog.name}
+            fill
+            className="object-cover"
+          />
+        ) : (
+          <DogPlaceholder name={dog.name} />
+        )}
         <div className="absolute top-3 left-3">
           <StatusBadge estado={dog.estado} />
         </div>
