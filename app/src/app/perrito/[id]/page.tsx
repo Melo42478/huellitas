@@ -31,7 +31,9 @@ export default async function PerritoPage({ params }: PageProps) {
 
   const paragraphs = paras(dog.historia);
   const canDonate = showDonate(dog);
-  const { before, after } = getBeforeAfter(dog.id);
+  const { before: localBefore, after: localAfter } = getBeforeAfter(dog.id);
+  const before = dog.antes || localBefore;
+  const after = dog.ahora || localAfter;
   const gallery = getGallery(dog.id);
 
   return (
