@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useDonateModal } from "@/components/donate/DonateModalContext";
 import type { Dog } from "@/lib/types";
 import { showDonate } from "@/lib/helpers";
-import { getImageUrl } from "@/lib/dogAssets";
 
 interface DonacionesClientProps {
   sponsorDogs: Dog[];
@@ -48,9 +47,9 @@ export default function DonacionesClient({
               <div key={dog.id} className="bg-surface border border-border rounded-row p-4 flex gap-3.5 items-stretch">
                 {/* Photo */}
                 <div className="w-[82px] h-[82px] rounded-row flex-shrink-0 overflow-hidden">
-                  {getImageUrl(dog.id) ? (
+                  {dog.ahora ? (
                     <Image
-                      src={getImageUrl(dog.id)!}
+                      src={dog.ahora}
                       alt={dog.name}
                       width={82}
                       height={82}

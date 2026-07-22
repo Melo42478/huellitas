@@ -3,14 +3,11 @@ import Image from "next/image";
 import { excerpt, metaLine } from "@/lib/helpers";
 import type { Dog } from "@/lib/types";
 import type { CSSProperties } from "react";
-import { getImageUrl } from "@/lib/dogAssets";
 import { components, cardStyles } from "@/lib/styles";
 import StatusBadge from "./StatusBadge";
 import DogPlaceholder from "./DogPlaceholder";
 
 export default function DogCard({ dog }: { dog: Dog }) {
-  const imageUrl = getImageUrl(dog.id);
-
   return (
     <Link
       href={`/perrito/${dog.id}`}
@@ -18,9 +15,9 @@ export default function DogCard({ dog }: { dog: Dog }) {
     >
       {/* Image with status badge */}
       <div style={cardStyles.imgbox}>
-        {imageUrl ? (
+        {dog.ahora ? (
           <Image
-            src={imageUrl}
+            src={dog.ahora}
             alt={dog.name}
             fill
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" } as CSSProperties}
