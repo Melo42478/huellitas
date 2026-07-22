@@ -43,7 +43,7 @@ export default function Header() {
         {/* Mobile nav panel */}
         {menuOpen && (
           <div className="absolute top-full left-0 right-0 bg-bg border-b border-border md2:hidden">
-            <NavLinks className="flex flex-col gap-0 p-3" />
+            <NavLinks className="flex flex-col gap-0 p-3" onNavigate={() => setMenuOpen(false)} />
           </div>
         )}
       </div>
