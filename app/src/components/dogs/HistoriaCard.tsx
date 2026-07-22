@@ -1,0 +1,40 @@
+import Link from "next/link";
+import Image from "next/image";
+import { excerpt } from "@/lib/helpers";
+import type { Dog } from "@/lib/types";
+
+export default function HistoriaCard({ dog }: { dog: Dog }) {
+  return (
+    <Link
+      href={`/perrito/${dog.id}`}
+      className="bg-surface border border-border rounded-card overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all"
+    >
+      {/* Before/After side by side */}
+      <div className="grid grid-cols-2 gap-0">
+        {/* Before */}
+        <div className="relative aspect-square overflow-hidden bg-text-muted/5">
+          {dog.antes ? (
+            <Image src={dog.antes} alt="Antes" fill className="object-cover" />
+          ) : null}
+        </div>
+
+        {/* After */}
+        <div className="relative aspect-square overflow-hidden bg-text-muted/5">
+          {dog.ahora ? (
+            <Image src={dog.ahora} alt="Ahora" fill className="object-cover" />
+          ) : null}
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="p-4">
+        <h3 className="font-display font-extrabold text-lg text-green mb-1.5">
+          {dog.name} · Adoptado ♥
+        </h3>
+        <p className="text-text-secondary text-sm line-clamp-2 leading-relaxed">
+          {excerpt(dog.historia)}
+        </p>
+      </div>
+    </Link>
+  );
+}
