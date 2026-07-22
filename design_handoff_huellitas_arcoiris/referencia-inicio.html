@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Referencia — Inicio · Huellitas Arcoíris</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;color:#4A3B33;background:#FBF4E8;}
+  a{color:#16808A;text-decoration:none;}
+  a:hover{color:#0F6068;}
+  @keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:40;background:rgba(251,244,232,.92);backdrop-filter:blur(8px);border-bottom:1px solid #ece0cb;}
+  .headbar{display:flex;align-items:center;gap:14px;padding:10px 20px;max-width:1180px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{height:54px;width:54px;object-fit:contain;}
+  .wordmark{font-family:'Baloo 2',cursive;font-weight:800;font-size:22px;line-height:1;color:#16808A;}
+  .wordmark span{color:#EF9BB4;}
+  nav.main{margin-left:auto;display:flex;gap:4px;}
+  nav.main a{font-size:15px;font-weight:800;color:#5f5045;padding:9px 13px;border-radius:10px;}
+  nav.main a:hover{background:#E4F2F1;color:#16808A;}
+
+  /* Hero */
+  .hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#FFFDF8 0%,#FBF4E8 100%);border-bottom:1px solid #ece0cb;}
+  .blob{position:absolute;border-radius:50%;}
+  .blob.a{top:-40px;right:-30px;width:180px;height:180px;background:#f4dfe6;opacity:.5;}
+  .blob.b{bottom:-50px;left:-30px;width:160px;height:160px;background:#e2eee0;opacity:.6;}
+  .herogrid{position:relative;max-width:1180px;margin:0 auto;padding:64px 20px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+  .pill-badge{display:inline-block;background:#E4F2F1;color:#0F6068;font-weight:800;font-size:14px;padding:7px 14px;border-radius:999px;margin-bottom:18px;}
+  h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(38px,6vw,62px);line-height:1.02;margin:0 0 16px;color:#4A3B33;}
+  h1 span{color:#16808A;}
+  .lead{font-size:19px;line-height:1.6;color:#6f5f52;max-width:520px;margin:0 0 26px;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;}
+  .btn{font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;display:inline-block;}
+  .btn-primary{background:#16808A;color:#fff;}
+  .btn-primary:hover{background:#0F6068;color:#fff;}
+  .btn-outline{background:#fff;color:#16808A;border:2px solid #16808A;}
+  .btn-outline:hover{background:#E4F2F1;color:#16808A;}
+  .herologo{display:flex;justify-content:center;}
+  .herologo img{width:min(380px,82%);animation:floaty 5s ease-in-out infinite;filter:drop-shadow(0 20px 30px rgba(74,59,51,.12));}
+
+  /* Section */
+  .section{max-width:1180px;margin:0 auto;padding:56px 20px;}
+  .sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px;}
+  h2{font-family:'Baloo 2',cursive;font-weight:800;font-size:34px;margin:0;color:#4A3B33;}
+  .sub{margin:6px 0 0;color:#8A7A6E;font-size:17px;}
+  .link-all{font-weight:800;font-size:16px;}
+
+  /* Cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;}
+  .card{background:#FFFDF8;border:1px solid #ece0cb;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(74,59,51,.06);transition:transform .2s,box-shadow .2s;color:inherit;}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(74,59,51,.12);}
+  .card .imgbox{position:relative;aspect-ratio:1/1;overflow:hidden;}
+  .card .imgbox img{width:100%;height:100%;object-fit:cover;display:block;}
+  .status{position:absolute;top:12px;left:12px;background:#16808A;color:#fff;font-weight:800;font-size:12px;padding:5px 12px;border-radius:999px;}
+  .card .body{padding:16px 18px 18px;}
+  .card .name{font-family:'Baloo 2',cursive;font-weight:800;font-size:24px;color:#16808A;}
+  .card .meta{color:#8A7A6E;font-size:14px;font-weight:700;margin:2px 0 10px;}
+  .card .excerpt{color:#6f5f52;font-size:15px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+  /* Quiénes bloque */
+  .quienes{background:#FFFDF8;border-top:1px solid #ece0cb;border-bottom:1px solid #ece0cb;}
+  .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;max-width:1180px;margin:0 auto;padding:56px 20px;}
+  .eyebrow{font-weight:800;color:#EF9BB4;letter-spacing:.5px;text-transform:uppercase;font-size:13px;}
+  .qbox{background:#EDF5F0;border-radius:22px;padding:28px;}
+  .qbox h3{font-family:'Baloo 2',cursive;margin:0 0 16px;font-size:22px;color:#16808A;}
+  .step{display:flex;align-items:center;gap:14px;margin-bottom:14px;font-weight:700;color:#4A3B33;}
+  .step .ic{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto;}
+
+  /* Stats */
+  .stats{background:#EDF5F0;}
+  .statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1180px;margin:0 auto;padding:44px 20px;text-align:center;}
+  .stat .num{font-family:'Baloo 2',cursive;font-weight:800;font-size:44px;color:#16808A;line-height:1;}
+  .stat .lbl{color:#6f5f52;font-weight:700;margin-top:6px;}
+
+  /* Footer */
+  footer{background:#16808A;color:#fff;}
+  .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;max-width:1180px;margin:0 auto;padding:48px 20px;}
+  footer a{color:#d7efee;display:block;margin:6px 0;}
+  footer a:hover{color:#fff;}
+  footer h4{font-family:'Baloo 2',cursive;margin:0 0 12px;font-size:18px;}
+  .fbrand{display:flex;align-items:center;gap:10px;font-family:'Baloo 2',cursive;font-weight:800;font-size:20px;margin-bottom:12px;}
+  .fbrand img{height:40px;width:40px;object-fit:contain;background:#fff;border-radius:50%;padding:3px;}
+  .copy{border-top:1px solid rgba(255,255,255,.2);padding:16px 20px;text-align:center;font-size:13px;color:#d7efee;}
+
+  @media(max-width:860px){
+    nav.main{display:none;}
+    .herogrid,.qgrid,.statgrid,.fgrid{grid-template-columns:1fr;}
+    .statgrid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headbar">
+    <a class="brand" href="#/"><img src="assets/logo.png" alt="Huellitas Arcoíris"><span class="wordmark">Huellitas <span>Arcoíris</span></span></a>
+    <nav class="main">
+      <a href="#/galeria">Inicio</a><a href="#/galeria">Perritos</a><a href="#/adoptar">Cómo adoptar</a><a href="#/donaciones">Donar</a><a href="#/historias">Historias</a><a href="#/contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="blob a"></span><span class="blob b"></span>
+    <div class="herogrid">
+      <div>
+        <span class="pill-badge">Adopción responsable · Querétaro</span>
+        <h1>Cada huella merece<br><span>un hogar de arcoíris</span></h1>
+        <p class="lead">Rescatamos, curamos y preparamos a perritos en situación de calle para encontrarles una familia paciente y amorosa. Conoce sus historias y su increíble transformación.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#/galeria">Conoce a los perritos</a>
+          <a class="btn btn-outline" href="#/donaciones">Quiero ayudar ♥</a>
+        </div>
+      </div>
+      <div class="herologo"><img src="assets/logo.png" alt="Huellitas Arcoíris"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sec-head">
+      <div>
+        <h2>Perritos buscando familia</h2>
+        <p class="sub">Ellos ya están listos. ¿Y tú?</p>
+      </div>
+      <a class="link-all" href="#/galeria">Ver todos →</a>
+    </div>
+    <div class="grid">
+      <a class="card" href="#/perrito/rocky">
+        <div class="imgbox"><img src="assets/rocky-ahora.jpeg" alt="Rocky"><span class="status">En adopción</span></div>
+        <div class="body"><div class="name">Rocky</div><div class="meta">Macho · 3 años aprox. · Mediano</div><div class="excerpt">Rocky fue rescatado de los baldíos de Zákia junto a su manada. Al principio, él y sus compañeros fueron vacunados y este…</div></div>
+      </a>
+      <a class="card" href="#/perrito/victoria">
+        <div class="imgbox"><img src="assets/victoria-ahora.png" alt="Victoria"><span class="status">En adopción</span></div>
+        <div class="body"><div class="name">Victoria</div><div class="meta">Hembra · 4 años aprox. · Mediano</div><div class="excerpt">Victoria fue rescatada de los baldíos de Zákia junto a su manada. Nuestro principal objetivo era ayudarla, porque tenía…</div></div>
+      </a>
+      <a class="card" href="#/perrito/caramelo">
+        <div class="imgbox"><img src="assets/caramelo-ahora.png" alt="Caramelo"><span class="status">En adopción</span></div>
+        <div class="body"><div class="name">Caramelo</div><div class="meta">Macho · 2 años · Mediano</div><div class="excerpt">Caramelo fue rescatado junto con su amigo Negrito en el Walmart de Zákia. Negrito fue baleado y la vida de los dos corrí…</div></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="quienes">
+    <div class="qgrid">
+      <div>
+        <div class="eyebrow">Quiénes somos</div>
+        <h2 style="margin:8px 0 16px;">Vecinos y vecinas con una misión de arcoíris</h2>
+        <p class="lead" style="margin-bottom:14px;">Somos un grupo <strong>sin ánimo de lucro</strong> que ayuda a animalitos en situación de calle, maltrato, abandono, sin comida, sin hogar o con enfermedades.</p>
+        <p class="lead">Nuestro objetivo es prepararlos para encontrar <strong>una familia amorosa y responsable.</strong></p>
+      </div>
+      <div class="qbox">
+        <h3>¿Qué hacemos con cada rescate?</h3>
+        <div class="step"><span class="ic" style="background:#E4F2F1;">🩺</span>Los llevamos al veterinario</div>
+        <div class="step"><span class="ic" style="background:#efe7f6;">🐛</span>Los desparasitamos</div>
+        <div class="step"><span class="ic" style="background:#f4dfe6;">💉</span>Los esterilizamos</div>
+        <div class="step"><span class="ic" style="background:#fbe8d6;">💊</span>Tratamiento médico si lo necesitan</div>
+        <div class="step"><span class="ic" style="background:#e2eee0;">🐾</span>Si es necesario, reciben entrenamiento</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="statgrid">
+      <div class="stat"><div class="num">5</div><div class="lbl">perritos rescatados</div></div>
+      <div class="stat"><div class="num">1</div><div class="lbl">con familia nueva</div></div>
+      <div class="stat"><div class="num">100%</div><div class="lbl">vacunados y esterilizados</div></div>
+      <div class="stat"><div class="num">0</div><div class="lbl">ánimo de lucro</div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="fgrid">
+    <div>
+      <div class="fbrand"><img src="assets/logo.png" alt="">Huellitas Arcoíris</div>
+      <p style="color:#d7efee;line-height:1.6;margin:0;">Grupo de rescate sin ánimo de lucro. Rescatamos, curamos y buscamos familias de arcoíris para cada huella.</p>
+    </div>
+    <div><h4>Explora</h4><a href="#/galeria">Perritos</a><a href="#/quienes">Quiénes somos</a><a href="#/adoptar">Cómo adoptar</a><a href="#/donaciones">Donaciones</a></div>
+    <div><h4>Contacto</h4><a href="https://wa.me/525526591490">WhatsApp: 55 2659 1490</a><a href="https://instagram.com/huellitas_arcoiris">Instagram: @huellitas_arcoiris</a><span style="color:#d7efee;">Querétaro, México</span></div>
+  </div>
+  <div class="copy">© 2026 Huellitas Arcoíris · Hecho con ♥ para los que no tienen voz · <a href="#/admin" style="display:inline;">Acceso administrador</a></div>
+</footer>
+
+</body>
+</html>

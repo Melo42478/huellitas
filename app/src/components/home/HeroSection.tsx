@@ -3,58 +3,149 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-surface to-bg border-b border-border">
-      {/* Decorative circles */}
-      <div className="absolute top-[-40px] right-[-30px] w-[180px] h-[180px] rounded-full bg-pink/20 blur-3xl" />
-      <div className="absolute bottom-[-50px] left-[-30px] w-[160px] h-[160px] rounded-full bg-green-soft/30 blur-3xl" />
+    <section style={heroStyle.section}>
+      {/* Decorative blobs */}
+      <span style={{ ...heroStyle.blob, ...heroStyle.blobA }} />
+      <span style={{ ...heroStyle.blob, ...heroStyle.blobB }} />
 
-      {/* Content */}
-      <div className="relative max-w-content mx-auto px-5 py-16 md2:py-20 grid grid-cols-1 md2:grid-cols-[1.1fr_.9fr] gap-10 md2:gap-10 items-center">
+      {/* Hero grid */}
+      <div style={heroStyle.herogrid}>
         {/* Left: Text */}
         <div>
-          <div className="inline-block bg-teal-soft text-teal-dark font-display font-extrabold text-sm px-3.5 py-1.5 rounded-pill mb-4.5">
-            Adopción responsable · Querétaro
-          </div>
+          <span style={heroStyle.pillBadge}>Adopción responsable · Querétaro</span>
 
-          <h1 className="font-display font-extrabold text-[clamp(38px,6vw,62px)] leading-tight mb-4 text-text">
+          <h1 style={heroStyle.h1}>
             Cada huella merece
             <br />
-            <span className="text-teal">un hogar de arcoíris</span>
+            <span style={{ color: "#16808A" }}>un hogar de arcoíris</span>
           </h1>
 
-          <p className="text-text-secondary2 text-lg leading-relaxed mb-7 max-w-xl">
+          <p style={heroStyle.lead}>
             Rescatamos, curamos y preparamos a perritos en situación de calle para encontrarles una
             familia paciente y amorosa. Conoce sus historias y su increíble transformación.
           </p>
 
-          <div className="flex flex-wrap gap-3.5">
-            <Link
-              href="/galeria"
-              className="inline-block bg-teal text-white font-display font-extrabold px-7 py-3.5 rounded-pill hover:bg-teal-dark transition-colors"
-            >
+          <div style={heroStyle.ctaRow}>
+            <Link href="/galeria" style={{ ...heroStyle.btn, ...heroStyle.btnPrimary }}>
               Conoce a los perritos
             </Link>
-            <Link
-              href="/donaciones"
-              className="inline-block bg-transparent text-teal border-2 border-teal font-display font-extrabold px-7 py-3.5 rounded-pill hover:bg-teal-soft transition-colors"
-            >
+            <Link href="/donaciones" style={{ ...heroStyle.btn, ...heroStyle.btnOutline }}>
               Quiero ayudar ♥
             </Link>
           </div>
         </div>
 
         {/* Right: Logo */}
-        <div className="hidden md2:flex justify-center items-center">
+        <div style={heroStyle.heroLogo}>
           <Image
             src="/assets/logo.png"
             alt="Huellitas Arcoíris"
             width={380}
             height={380}
-            className="w-full max-w-xs animate-floaty drop-shadow-lg"
+            style={heroStyle.logoImg}
             priority
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
+
+const heroStyle = {
+  section: {
+    position: "relative" as const,
+    overflow: "hidden" as const,
+    background: "linear-gradient(180deg, #FFFDF8 0%, #FBF4E8 100%)",
+    borderBottom: "1px solid #ece0cb",
+  },
+  blob: {
+    position: "absolute" as const,
+    borderRadius: "50%",
+  },
+  blobA: {
+    top: "-40px",
+    right: "-30px",
+    width: "180px",
+    height: "180px",
+    background: "#f4dfe6",
+    opacity: 0.5,
+  },
+  blobB: {
+    bottom: "-50px",
+    left: "-30px",
+    width: "160px",
+    height: "160px",
+    background: "#e2eee0",
+    opacity: 0.6,
+  },
+  herogrid: {
+    position: "relative" as const,
+    maxWidth: "1180px",
+    margin: "0 auto",
+    padding: "64px 20px",
+    display: "grid",
+    gridTemplateColumns: "1.1fr .9fr",
+    gap: "40px",
+    alignItems: "center",
+  },
+  pillBadge: {
+    display: "inline-block",
+    background: "#E4F2F1",
+    color: "#0F6068",
+    fontWeight: "800",
+    fontSize: "14px",
+    padding: "7px 14px",
+    borderRadius: "999px",
+    marginBottom: "18px",
+  },
+  h1: {
+    fontFamily: '"Baloo 2", cursive',
+    fontWeight: "800",
+    fontSize: "clamp(38px, 6vw, 62px)",
+    lineHeight: 1.02,
+    margin: "0 0 16px",
+    color: "#4A3B33",
+  },
+  lead: {
+    fontSize: "19px",
+    lineHeight: 1.6,
+    color: "#6f5f52",
+    maxWidth: "520px",
+    margin: "0 0 26px",
+  },
+  ctaRow: {
+    display: "flex",
+    flexWrap: "wrap" as const,
+    gap: "12px",
+  },
+  btn: {
+    fontWeight: "800",
+    fontSize: "17px",
+    padding: "14px 26px",
+    borderRadius: "999px",
+    display: "inline-block",
+    textDecoration: "none",
+    cursor: "pointer",
+    border: "none",
+    transition: "all 0.2s ease",
+  },
+  btnPrimary: {
+    background: "#16808A",
+    color: "#fff",
+  },
+  btnOutline: {
+    background: "#fff",
+    color: "#16808A",
+    border: "2px solid #16808A",
+  },
+  heroLogo: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoImg: {
+    width: "min(380px, 82%)",
+    animation: "floaty 5s ease-in-out infinite",
+    filter: "drop-shadow(0 20px 30px rgba(74,59,51,.12))",
+  },
+};
