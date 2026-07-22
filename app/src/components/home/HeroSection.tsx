@@ -46,7 +46,7 @@ export default function HeroSection() {
             alt="Huellitas Arcoíris"
             width={380}
             height={380}
-            style={{ width: "min(380px, 82%)", animation: "floaty 5s ease-in-out infinite", filter: "drop-shadow(0 20px 30px rgba(74,59,51,.12))" } as CSSProperties}
+            style={{ width: "min(380px, 82%)", height: "auto", animation: "floaty 5s ease-in-out infinite", filter: "drop-shadow(0 20px 30px rgba(74,59,51,.12))" } as CSSProperties}
             priority
           />
         </div>
