@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getDogById, paras, showDonate } from "@/lib/dogs";
+import { getDogById } from "@/lib/dogs";
+import { paras, showDonate } from "@/lib/helpers";
 import { whatsappAdoptLink } from "@/lib/constants";
 import { getBeforeAfter, getGallery } from "@/lib/dogAssets";
 import BeforeAfter from "@/components/dogs/BeforeAfter";

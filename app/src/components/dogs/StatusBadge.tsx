@@ -1,4 +1,4 @@
-import { STATUS } from "@/lib/dogs";
+import { STATUS } from "@/lib/helpers";
 import type { Estado } from "@/lib/types";
 
 export default function StatusBadge({ estado }: { estado: Estado }) {

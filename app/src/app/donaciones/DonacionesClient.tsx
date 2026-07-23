@@ -34,7 +34,7 @@ export default function DonacionesClient({
           </div>
         </div>
         <button
-          onClick={() => openDonate("__general__", 200)}
+          onClick={() => openDonate("__general__", "", 200)}
           className="flex-shrink-0 bg-white text-teal font-display font-extrabold text-base px-8 py-3.5 rounded-pill hover:opacity-90 transition-opacity cursor-pointer"
         >
           Donar ahora ♥
