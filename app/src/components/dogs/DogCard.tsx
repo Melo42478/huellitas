@@ -17,7 +17,7 @@ export default function DogCard({ dog }: { dog: Dog }) {
       style={components.card}
     >
       {/* Image with status badge */}
-      <div style={cardStyles.imgbox}>
+      <div className="relative aspect-square overflow-hidden">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -25,12 +25,12 @@ export default function DogCard({ dog }: { dog: Dog }) {
             fill
             loading="lazy"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" } as CSSProperties}
+            className="object-cover"
           />
         ) : (
           <DogPlaceholder name={dog.name} />
         )}
-        <div style={{ position: "absolute", top: "12px", left: "12px" } as CSSProperties}>
+        <div className="absolute top-3 left-3">
           <StatusBadge estado={dog.estado} />
         </div>
       </div>

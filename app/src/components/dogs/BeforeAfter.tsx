@@ -10,10 +10,9 @@ export default function BeforeAfter({
   return (
     <div className="grid grid-cols-1 md2:grid-cols-2 gap-3.5 mb-7">
       {/* ANTES */}
-      <div className="relative rounded-card overflow-hidden border-4 border-teal" style={{ aspectRatio: "4/3" }}>
+      <div className="relative rounded-card overflow-hidden border-4 border-teal aspect-video">
         {antes && (
           <>
-            {/* Blurred background */}
             <Image
               src={antes}
               alt=""
@@ -22,7 +21,6 @@ export default function BeforeAfter({
               className="object-cover blur-lg brightness-90 scale-125"
               aria-hidden
             />
-            {/* Sharp image on top */}
             <Image
               src={antes}
               alt="Antes"
@@ -38,7 +36,7 @@ export default function BeforeAfter({
       </div>
 
       {/* AHORA */}
-      <div className="relative rounded-card overflow-hidden border-4 border-green" style={{ aspectRatio: "4/3" }}>
+      <div className="relative rounded-card overflow-hidden border-4 border-green aspect-video">
         {ahora && (
           <Image
             src={ahora}
