@@ -153,17 +153,16 @@ async function seed() {
 
   // Upload assets to Storage
   console.log("📤 Uploading assets to Storage...");
-  const assetDir = path.join(__dirname, "../../../design_handoff_huellitas_arcoiris/assets");
+  const assetDir = path.join(__dirname, "../../design_handoff_huellitas_arcoiris/assets");
 
   for (const dog of SEED_DATA) {
     if (dog.assetBefore) {
       const beforePath = path.join(assetDir, dog.assetBefore);
       if (fs.existsSync(beforePath)) {
         const buffer = fs.readFileSync(beforePath);
-        const ext = path.extname(dog.assetBefore);
         await supabase.storage
           .from("dog-photos")
-          .upload(`${dog.id}/antes${ext}`, buffer, { upsert: true });
+          .upload(`${dog.id}/antes`, buffer, { upsert: true });
       }
     } else {
       // Generate placeholder
@@ -178,10 +177,9 @@ async function seed() {
       const afterPath = path.join(assetDir, dog.assetAfter);
       if (fs.existsSync(afterPath)) {
         const buffer = fs.readFileSync(afterPath);
-        const ext = path.extname(dog.assetAfter);
         await supabase.storage
           .from("dog-photos")
-          .upload(`${dog.id}/ahora${ext}`, buffer, { upsert: true });
+          .upload(`${dog.id}/ahora`, buffer, { upsert: true });
       }
     } else {
       const placeholder = generatePlaceholderSvg(`foto AHORA · ${dog.name}`, "#d9e3cf");
@@ -211,11 +209,11 @@ async function seed() {
   const dogsToInsert = await Promise.all(
     SEED_DATA.map(async (dog) => {
       const before = dog.assetBefore
-        ? supabase.storage.from("dog-photos").getPublicUrl(`${dog.id}/antes${path.extname(dog.assetBefore)}`).data.publicUrl
+        ? supabase.storage.from("dog-photos").getPublicUrl(`${dog.id}/antes`).data.publicUrl
         : supabase.storage.from("dog-photos").getPublicUrl(`${dog.id}/antes.svg`).data.publicUrl;
 
       const after = dog.assetAfter
-        ? supabase.storage.from("dog-photos").getPublicUrl(`${dog.id}/ahora${path.extname(dog.assetAfter)}`).data.publicUrl
+        ? supabase.storage.from("dog-photos").getPublicUrl(`${dog.id}/ahora`).data.publicUrl
         : supabase.storage.from("dog-photos").getPublicUrl(`${dog.id}/ahora.svg`).data.publicUrl;
 
       const gallery = await Promise.all(
