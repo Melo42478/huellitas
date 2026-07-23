@@ -1,5 +1,5 @@
 import { getDogs } from "@/lib/dogs";
-import { money, pct, showDonate } from "@/lib/helpers";
+import { showDonate } from "@/lib/helpers";
 import DonacionesClient from "./DonacionesClient";
 
 export default async function Page() {
@@ -14,7 +14,7 @@ export default async function Page() {
         general o elegir un perrito en específico.
       </p>
 
-      <DonacionesClient sponsorDogs={sponsorDogs} money={money} pct={pct} />
+      <DonacionesClient sponsorDogs={sponsorDogs} />
     </section>
   );
 }

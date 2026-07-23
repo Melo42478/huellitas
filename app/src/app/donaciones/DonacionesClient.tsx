@@ -3,18 +3,23 @@
 import Image from "next/image";
 import { useDonateModal } from "@/components/donate/DonateModalContext";
 import type { Dog } from "@/lib/types";
-import { showDonate } from "@/lib/helpers";
+
+const money = (n: number): string => {
+  return "$" + (Number(n) || 0).toLocaleString("es-MX");
+};
+
+const pct = (dog: Pick<Dog, "meta" | "recaudado">): string => {
+  const m = Number(dog.meta) || 0;
+  if (m <= 0) return "0%";
+  return Math.min(100, Math.round((Number(dog.recaudado) || 0) / m * 100)) + "%";
+};
 
 interface DonacionesClientProps {
   sponsorDogs: Dog[];
-  money: (n: number) => string;
-  pct: (dog: { meta: number; recaudado: number }) => string;
 }
 
 export default function DonacionesClient({
   sponsorDogs,
-  money,
-  pct,
 }: DonacionesClientProps) {
   const { openDonate } = useDonateModal();
 
