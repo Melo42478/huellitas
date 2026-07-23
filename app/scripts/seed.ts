@@ -10,6 +10,25 @@ import * as path from "path";
 
 const SEED_DATA = [
   {
+    id: "luca",
+    name: "Luca",
+    estado: "adopcion" as const,
+    sexo: "Macho" as const,
+    edad: "adulto",
+    tamano: "Mediano" as const,
+    ubicacion: "Querétaro",
+    vacunado: true,
+    esterilizado: true,
+    historia: `Lo rescatamos de un lote baldío. A toda su manada se la llevó la perrera, pero él logró esconderse y salvarse. Era muy miedoso, pero con poquitos días recuperó la confianza.
+
+Está esterilizado, vacunado y desparasitado. Es muy amoroso y convive perfecto con niños y otros perritos. Tiene energía media y está listo para ser parte de tu familia.`,
+    meta: 6000,
+    recaudado: 0,
+    assetBefore: "luca-antes.jpeg",
+    assetAfter: "luca-ahora.jpeg",
+    gallery: ["luca-ahora.jpeg"],
+  },
+  {
     id: "rocky",
     name: "Rocky",
     estado: "adopcion" as const,
