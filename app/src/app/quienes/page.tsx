@@ -21,7 +21,7 @@ export default function Page() {
 
           {/* Sin ánimo de lucro */}
           <div className="bg-purple-soft border border-border rounded-row p-5.5 flex items-center gap-3">
-            <span className="text-2xl flex-shrink-0">🐾</span>
+            <span className="text-2xl flex-shrink-0" aria-hidden="true">🐾</span>
             <p className="font-display font-extrabold text-text text-base">
               Somos un grupo sin ánimo de lucro.
             </p>

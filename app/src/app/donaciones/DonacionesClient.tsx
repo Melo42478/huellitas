@@ -75,7 +75,14 @@ export default function DonacionesClient({
                   </div>
 
                   {/* Progress bar */}
-                  <div className="bg-border h-2.5 rounded-pill overflow-hidden my-2">
+                  <div
+                    className="bg-border h-2.5 rounded-pill overflow-hidden my-2"
+                    role="progressbar"
+                    aria-valuenow={parseInt(percentage)}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`Progreso: ${percentage} recaudado`}
+                  >
                     <div
                       className="h-full bg-green rounded-pill transition-all"
                       style={{ width: percentage }}
@@ -87,7 +94,7 @@ export default function DonacionesClient({
                   </div>
 
                   <button
-                    onClick={() => openDonate(dog.id, 200)}
+                    onClick={() => openDonate(dog.id, dog.name, 200)}
                     className="self-start bg-teal text-white font-display font-extrabold text-xs px-4.5 py-2 rounded-pill hover:bg-teal-dark transition-colors cursor-pointer"
                   >
                     Donar a {dog.name}

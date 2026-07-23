@@ -9,11 +9,12 @@ interface DonateModalProps {
 }
 
 export default function DonateModal({ dogName }: DonateModalProps) {
-  const { isOpen, donateId, amount, closeDonate, setAmount } = useDonateModal();
+  const { isOpen, donateId, donateName, amount, closeDonate, setAmount } = useDonateModal();
 
   if (!isOpen) return null;
 
-  const title = donateId === "__general__" ? "Donación general" : `Donar a ${dogName}`;
+  const displayName = donateName || dogName;
+  const title = donateId === "__general__" ? "Donación general" : `Donar a ${displayName}`;
 
   return (
     <div
@@ -46,10 +47,10 @@ export default function DonateModal({ dogName }: DonateModalProps) {
             <button
               key={amt}
               onClick={() => setAmount(amt)}
-              className={`font-display font-extrabold text-sm px-4.5 py-2.5 rounded-input transition-colors ${
+              className={`font-display font-extrabold text-sm px-4.5 py-2.5 rounded-lg transition-colors border-2 ${
                 amount === amt
-                  ? "bg-teal-soft text-teal-dark border-2 border-teal"
-                  : "bg-surface text-text-secondary2 border-2 border-border hover:border-teal"
+                  ? "bg-teal-soft text-teal-dark border-teal"
+                  : "bg-surface text-text-secondary2 border-border hover:border-teal"
               }`}
             >
               ${amt}

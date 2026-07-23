@@ -5,8 +5,9 @@ import { createContext, useContext, useState, ReactNode } from "react";
 interface DonateModalContextType {
   isOpen: boolean;
   donateId: string | null;
+  donateName: string | null;
   amount: number;
-  openDonate: (id: string, initialAmount?: number) => void;
+  openDonate: (id: string, name?: string, initialAmount?: number) => void;
   closeDonate: () => void;
   setAmount: (amount: number) => void;
 }
@@ -16,10 +17,12 @@ const DonateModalContext = createContext<DonateModalContextType | undefined>(und
 export function DonateModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [donateId, setDonateId] = useState<string | null>(null);
+  const [donateName, setDonateName] = useState<string | null>(null);
   const [amount, setAmount] = useState(200);
 
-  const openDonate = (id: string, initialAmount = 200) => {
+  const openDonate = (id: string, name = "", initialAmount = 200) => {
     setDonateId(id);
+    setDonateName(name || null);
     setAmount(initialAmount);
     setIsOpen(true);
   };
@@ -27,10 +30,11 @@ export function DonateModalProvider({ children }: { children: ReactNode }) {
   const closeDonate = () => {
     setIsOpen(false);
     setDonateId(null);
+    setDonateName(null);
   };
 
   return (
-    <DonateModalContext.Provider value={{ isOpen, donateId, amount, openDonate, closeDonate, setAmount }}>
+    <DonateModalContext.Provider value={{ isOpen, donateId, donateName, amount, openDonate, closeDonate, setAmount }}>
       {children}
     </DonateModalContext.Provider>
   );

@@ -24,6 +24,7 @@ export default function DogCard({ dog }: { dog: Dog }) {
             alt={dog.name}
             fill
             loading="lazy"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" } as CSSProperties}
           />
         ) : (

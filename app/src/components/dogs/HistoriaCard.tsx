@@ -18,7 +18,14 @@ export default function HistoriaCard({ dog }: { dog: Dog }) {
         {/* Before */}
         <div className="relative aspect-square overflow-hidden bg-text-muted/5">
           {images.before ? (
-            <Image src={images.before} alt="Antes" fill loading="lazy" className="object-cover" />
+            <Image
+              src={images.before}
+              alt="Antes"
+              fill
+              loading="lazy"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-cover"
+            />
           ) : (
             <DogPlaceholder name={dog.name} />
           )}
@@ -27,7 +34,14 @@ export default function HistoriaCard({ dog }: { dog: Dog }) {
         {/* After */}
         <div className="relative aspect-square overflow-hidden bg-text-muted/5">
           {images.after ? (
-            <Image src={images.after} alt="Ahora" fill loading="lazy" className="object-cover" />
+            <Image
+              src={images.after}
+              alt="Ahora"
+              fill
+              loading="lazy"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-cover"
+            />
           ) : (
             <DogPlaceholder name={dog.name} />
           )}

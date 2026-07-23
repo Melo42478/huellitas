@@ -10,7 +10,7 @@ export default function DogFacts({ dog }: { dog: Dog }) {
       <div className="flex flex-col gap-2.5">
         {factsList.map((fact) => (
           <div key={fact.label} className="flex items-center gap-2.5 font-bold text-text-secondary2 text-sm">
-            <span style={{ color: fact.color }}>🐾</span>
+            <span style={{ color: fact.color }} aria-hidden="true">🐾</span>
             <span>{fact.label}</span>
           </div>
         ))}

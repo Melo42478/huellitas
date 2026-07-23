@@ -18,11 +18,18 @@ export default function BeforeAfter({
               src={antes}
               alt=""
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover blur-lg brightness-90 scale-125"
               aria-hidden
             />
             {/* Sharp image on top */}
-            <Image src={antes} alt="Antes" fill className="object-contain relative z-10" />
+            <Image
+              src={antes}
+              alt="Antes"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-contain relative z-10"
+            />
           </>
         )}
         <div className="absolute top-3 left-3 bg-teal text-white px-4 py-1 rounded-pill font-display font-extrabold text-xs">
@@ -32,7 +39,15 @@ export default function BeforeAfter({
 
       {/* AHORA */}
       <div className="relative rounded-card overflow-hidden border-4 border-green" style={{ aspectRatio: "4/3" }}>
-        {ahora && <Image src={ahora} alt="Ahora" fill className="object-cover" />}
+        {ahora && (
+          <Image
+            src={ahora}
+            alt="Ahora"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+          />
+        )}
         <div className="absolute top-3 left-3 bg-green text-white px-4 py-1 rounded-pill font-display font-extrabold text-xs">
           AHORA
         </div>
