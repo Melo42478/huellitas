@@ -3,19 +3,17 @@
 import { Dog } from "./types";
 import { createClient } from "./supabase/server";
 
-// Re-export helpers for convenience (they're pure functions, safe everywhere)
-export * from "./helpers";
-
 export async function getDogs(filter?: string) {
   const supabase = await createClient();
 
-  let query = supabase.from("dogs").select("*").order("created_at", { ascending: false });
+  const query = supabase
+    .from("dogs")
+    .select("id, name, edad, estado, tamano, vacunado, esterilizado, historia, ahora, recaudado, meta, created_at")
+    .order("created_at", { ascending: false });
 
-  if (filter && filter !== "todos") {
-    query = query.eq("estado", filter);
-  }
+  const filteredQuery = filter && filter !== "todos" ? query.eq("estado", filter) : query;
 
-  const { data, error } = await query;
+  const { data, error } = await filteredQuery;
 
   if (error) {
     console.error("Error fetching dogs:", error);

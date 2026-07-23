@@ -63,8 +63,8 @@ export default async function PerritoPage({ params }: PageProps) {
             Su historia
           </h2>
           <div className="space-y-3.5">
-            {paragraphs.map((para, i) => (
-              <p key={i} className="flex gap-3 text-text-secondary2 text-base leading-relaxed">
+            {paragraphs.map((para) => (
+              <p key={para} className="flex gap-3 text-text-secondary2 text-base leading-relaxed">
                 <span className="text-teal flex-shrink-0">🐾</span>
                 <span>{para}</span>
               </p>

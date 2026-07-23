@@ -24,7 +24,7 @@ export default function Footer() {
             <span style={{ flex: "none", width: "60px", height: "60px", borderRadius: "16px", background: "#FFFDF8", display: "flex", alignItems: "center", justifyContent: "center", padding: "7px", boxShadow: "0 4px 12px rgba(0,0,0,.12)" }}>
               <Image
                 src="/logo.png"
-                alt=""
+                alt="Logo Huellitas Arcoíris"
                 width={50}
                 height={50}
                 className="w-[100%] h-[100%] object-contain"

@@ -9,6 +9,7 @@ import "./globals.css";
 const baloo = Baloo_2({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
+  display: "swap",
   variable: "--font-baloo",
 });
 
@@ -16,6 +17,7 @@ const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
   style: ["normal", "italic"],
+  display: "swap",
   variable: "--font-nunito",
 });
 

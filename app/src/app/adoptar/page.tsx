@@ -11,9 +11,9 @@ export default function Page() {
       </p>
 
       <div className="flex flex-col gap-4 mb-8">
-        {ADOPT_STEPS.map((step, i) => (
+        {ADOPT_STEPS.map((step) => (
           <div
-            key={i}
+            key={step.n}
             className="flex gap-4.5 items-flex-start bg-surface border border-border rounded-row p-5"
           >
             <div

@@ -9,9 +9,10 @@ export default async function Home() {
   const allDogs = await getDogs();
   const adoptionDogs = allDogs.filter((d) => d.estado === "adopcion").slice(0, 3);
   const adoptedCount = allDogs.filter((d) => d.estado === "adoptado").length;
+  const totalRescued = allDogs.length;
 
   const stats = [
-    { label: "perritos rescatados", value: allDogs.length.toString(), color: "#16808A" },
+    { label: "perritos rescatados", value: totalRescued.toString(), color: "#16808A" },
     { label: "con familia nueva", value: adoptedCount.toString(), color: "#6FA84E" },
     { label: "vacunados y esterilizados", value: "100%", color: "#EF9BB4" },
     { label: "ánimo de lucro", value: "0", color: "#B394D4" },
