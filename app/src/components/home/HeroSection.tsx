@@ -11,25 +11,25 @@ export default function HeroSection() {
       <span style={{ ...heroStyles.blob, bottom: "-50px", left: "-30px", width: "160px", height: "160px", background: "#e2eee0", opacity: 0.6 } as CSSProperties} />
 
       {/* Hero grid */}
-      <div style={heroStyles.herogrid}>
+      <div style={heroStyles.herogrid} className="heroInner">
         {/* Left: Text */}
-        <div>
-          <span style={{ display: "inline-block", background: colors.tealSoft, color: colors.tealDark, fontWeight: "800", fontSize: "14px", padding: "7px 14px", borderRadius: "999px", marginBottom: "18px" } as CSSProperties}>
+        <div className="heroCopy">
+          <span className="heroBadge" style={{ display: "inline-block", background: colors.tealSoft, color: colors.tealDark, fontWeight: "800", fontSize: "14px", padding: "7px 14px", borderRadius: "999px", marginBottom: "18px" } as CSSProperties}>
             Adopción responsable · Querétaro
           </span>
 
-          <h1 style={heroStyles.h1}>
+          <h1 style={heroStyles.h1} className="heroTitle">
             Cada huella merece
             <br />
             <span style={{ color: colors.teal }}>un hogar de arcoíris</span>
           </h1>
 
-          <p style={heroStyles.lead}>
+          <p style={heroStyles.lead} className="heroLead">
             Rescatamos, curamos y preparamos a perritos en situación de calle para encontrarles una
             familia paciente y amorosa. Conoce sus historias y su increíble transformación.
           </p>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" } as CSSProperties}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" } as CSSProperties} className="heroBtns">
             <Link href="/galeria" style={{ ...components.btn, ...components.btnPrimary }}>
               Conoce a los perritos
             </Link>
@@ -40,7 +40,7 @@ export default function HeroSection() {
         </div>
 
         {/* Right: Logo */}
-        <div style={heroStyles.heroLogo}>
+        <div style={heroStyles.heroLogo} className="heroLogo">
           <Image
             src="/assets/logo.png"
             alt="Huellitas Arcoíris"

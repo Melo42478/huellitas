@@ -21,13 +21,15 @@ export default function Footer() {
         {/* Brand */}
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
-            <Image
-              src="/logo.png"
-              alt=""
-              width={50}
-              height={50}
-              className="w-[50px] h-[50px] object-contain"
-            />
+            <span style={{ flex: "none", width: "60px", height: "60px", borderRadius: "16px", background: "#FFFDF8", display: "flex", alignItems: "center", justifyContent: "center", padding: "7px", boxShadow: "0 4px 12px rgba(0,0,0,.12)" }}>
+              <Image
+                src="/logo.png"
+                alt=""
+                width={50}
+                height={50}
+                className="w-[100%] h-[100%] object-contain"
+              />
+            </span>
             <span className="font-display font-extrabold text-[22px]">Huellitas Arcoíris</span>
           </div>
           <p className="opacity-90 text-sm leading-relaxed max-w-xs">
