@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; color: #4A3B33; background: #FBF4E8; }
+  a { color: #16808A; text-decoration: none; }
+  a:hover { color: #0F6068; }
+  input, select, textarea, button { font-family: inherit; }
+  ::selection { background: #cdeae8; }
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes cardFlip {
+    0%   { transform: perspective(1100px) rotateY(0deg) scale(1); }
+    45%  { transform: perspective(1100px) rotateY(180deg) scale(.9); }
+    100% { transform: perspective(1100px) rotateY(360deg) scale(1); }
+  }
+  .sec { animation: fadeUp .45s ease both; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: #16808A !important; box-shadow: 0 0 0 3px rgba(22,128,138,.15); }
+  /* Container-based responsive: collapse by available width, not viewport (robust to preview/phone viewport quirks) */
+  .herogrid   { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)) !important; }
+  .beforeafter { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)) !important; }
+  .detailgrid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)) !important; }
+  .footgrid   { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)) !important; }
+  .formgrid   { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)) !important; }
+</style>
+</helmet>
+<template id="__bundler_thumbnail" data-bg-color="#FBF4E8">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#FBF4E8"/>
+    <circle cx="38" cy="42" r="9" fill="#EF9BB4"/>
+    <circle cx="62" cy="42" r="9" fill="#9FC26B"/>
+    <circle cx="28" cy="58" r="8" fill="#F0A95C"/>
+    <circle cx="72" cy="58" r="8" fill="#7FA6D6"/>
+    <circle cx="50" cy="66" r="15" fill="#16808A"/>
+    <text x="50" y="72" font-size="16" fill="#ffffff" text-anchor="middle" font-family="sans-serif">♥</text>
+  </svg>
+</template>
+<div aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden; opacity:0; pointer-events:none;">
+    <img data-asset="rockyAntes" src="assets/rocky-antes.jpeg" alt="">
+    <img data-asset="rockyAhora" src="assets/rocky-ahora.jpeg" alt="">
+    <img data-asset="victoriaAntes" src="assets/victoria-antes.png" alt="">
+    <img data-asset="victoriaAhora" src="assets/victoria-ahora.png" alt="">
+    <img data-asset="victoriaExtra" src="assets/victoria-extra.png" alt="">
+    <img data-asset="carameloAhora" src="assets/caramelo-ahora.png" alt="">
+    <img data-asset="carameloHead" src="assets/caramelo-head.png" alt="">
+    <img data-asset="logo" src="assets/logo.png" alt="">
+    <img data-asset="igqr" src="assets/instagram-qr.jpeg" alt="">
+  </div>
+  <div style="min-height:100vh; background:#FBF4E8; display:flex; flex-direction:column;">
+
+  <header style="position:sticky; top:0; z-index:40; background:rgba(251,244,232,.92); backdrop-filter:blur(8px); border-bottom:1px solid #ece0cb;">
+    <div style="max-width:1180px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:14px;">
+      <a href="#/" style="display:flex; align-items:center; gap:10px;">
+        <img src="{{ logoSrc }}" alt="Huellitas Arcoíris" style="height:54px; width:54px; object-fit:contain;">
+        <span style="font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; color:#16808A; letter-spacing:.2px;">Huellitas <span style="color:#EF9BB4;">Arcoíris</span></span>
+      </a>
+      <button onClick="{{ toggleMenu }}" aria-label="Menú" style="margin-left:auto; display:none; border:none; background:#E4F2F1; color:#16808A; width:44px; height:44px; border-radius:12px; font-size:22px; cursor:pointer;">☰</button>
+      <nav data-nav data-open="{{ menuOpenAttr }}" style="{{ navStyle }}">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="8">
+          <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="{{ item.style }}">{{ item.label }}</a>
+        </sc-for>
+      </nav>
+    </div>
+  </header>
+
+  <main style="flex:1;">
+
+    <!-- INICIO -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <section class="sec">
+        <div style="position:relative; overflow:hidden; background:linear-gradient(180deg,#FFFDF8 0%,#FBF4E8 100%); border-bottom:1px solid #ece0cb;">
+          <div style="position:absolute; top:-40px; right:-30px; width:180px; height:180px; border-radius:50%; background:#f4dfe6; opacity:.5;"></div>
+          <div style="position:absolute; bottom:-50px; left:-30px; width:160px; height:160px; border-radius:50%; background:#e2eee0; opacity:.6;"></div>
+          <div style="position:relative; max-width:1180px; margin:0 auto; padding:clamp(34px,6vw,64px) 20px; display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(24px,4vw,40px); align-items:center;" class="herogrid">
+            <div>
+              <div style="display:inline-block; background:#E4F2F1; color:#0F6068; font-weight:800; font-size:14px; padding:7px 14px; border-radius:999px; margin-bottom:18px;">Adopción responsable · Querétaro</div>
+              <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(32px,7vw,62px); line-height:1.04; margin:0 0 16px; color:#4A3B33; text-wrap:balance;">Cada huella merece <span style="color:#16808A;">un hogar de arcoíris</span></h1>
+              <p style="font-size:19px; line-height:1.6; color:#6f5f52; max-width:520px; margin:0 0 26px;">Rescatamos, curamos y preparamos a perritos en situación de calle para encontrarles una familia paciente y amorosa. Conoce sus historias y su increíble transformación.</p>
+              <div style="display:flex; flex-wrap:wrap; gap:12px;">
+                <a href="#/galeria" style="background:#16808A; color:#fff; font-weight:800; font-size:17px; padding:14px 26px; border-radius:999px;" style-hover="background:#0F6068;">Conoce a los perritos</a>
+                <a href="#/donaciones" style="background:#fff; color:#16808A; font-weight:800; font-size:17px; padding:14px 26px; border-radius:999px; border:2px solid #16808A;" style-hover="background:#E4F2F1;">Quiero ayudar ♥</a>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:center;">
+              <img src="{{ logoSrc }}" alt="Huellitas Arcoíris" style="width:min(320px,72%); animation:floaty 5s ease-in-out infinite; filter:drop-shadow(0 20px 30px rgba(74,59,51,.12));">
+            </div>
+          </div>
+        </div>
+
+        <div style="max-width:1180px; margin:0 auto; padding:56px 20px;">
+          <div style="display:flex; align-items:end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:26px;">
+            <div>
+              <h2 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:34px; margin:0; color:#4A3B33;">Perritos buscando familia</h2>
+              <p style="margin:6px 0 0; color:#8A7A6E; font-size:17px;">Ellos ya están listos. ¿Y tú?</p>
+            </div>
+            <a href="#/galeria" style="font-weight:800; font-size:16px;">Ver todos →</a>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:22px;" data-reveal="up">
+            <sc-for list="{{ featuredDogs }}" as="dog" hint-placeholder-count="3">
+              <a href="{{ dog.href }}" onClick="{{ dog.flipGo }}" style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:22px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 6px 18px rgba(74,59,51,.06); transition:transform .2s, box-shadow .2s; transform-style:preserve-3d;" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(74,59,51,.12);">
+                <div style="position:relative; aspect-ratio:1/1; overflow:hidden;">
+                  <img src="{{ dog.ahora }}" alt="{{ dog.name }}" style="width:100%; height:100%; object-fit:cover;">
+                  <span style="position:absolute; top:12px; left:12px; background:{{ dog.statusColor }}; color:#fff; font-weight:800; font-size:12px; padding:5px 12px; border-radius:999px;">{{ dog.statusLabel }}</span>
+                </div>
+                <div style="padding:16px 18px 18px;">
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:24px; color:#16808A;">{{ dog.name }}</div>
+                  <div style="color:#8A7A6E; font-size:14px; font-weight:700; margin:2px 0 10px;">{{ dog.metaLine }}</div>
+                  <div style="color:#6f5f52; font-size:15px; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ dog.excerpt }}</div>
+                </div>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="max-width:1180px; margin:0 auto; padding:20px 20px 56px;">
+          <div style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:26px; padding:40px; display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center;" class="detailgrid" data-reveal="up">
+            <div>
+              <div style="display:inline-block; background:#efe7f6; color:#8467a8; font-weight:800; font-size:13px; padding:6px 14px; border-radius:999px; margin-bottom:14px;">Quiénes somos</div>
+              <h2 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:34px; margin:0 0 14px; color:#4A3B33;">Vecinos y vecinas con una misión de arcoíris</h2>
+              <p style="font-size:17px; line-height:1.6; color:#5f5045; margin:0 0 12px;">Somos un grupo <b>sin ánimo de lucro</b> que ayuda a animalitos en situación de calle, maltrato, abandono, sin comida, sin hogar o con enfermedades.</p>
+              <p style="font-size:17px; line-height:1.6; color:#5f5045; margin:0;">Nuestro objetivo es prepararlos para encontrar <b style="color:#EF9BB4;">una familia amorosa y responsable.</b></p>
+            </div>
+            <div style="background:#EDF5F0; border:1px solid #e0ecd9; border-radius:20px; padding:24px;">
+              <h3 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:21px; color:#6FA84E; margin:0 0 16px;">¿Qué hacemos con cada rescate?</h3>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <sc-for list="{{ rescueSteps }}" as="step" hint-placeholder-count="5">
+                  <div style="display:flex; align-items:center; gap:14px;">
+                    <div style="flex:none; width:42px; height:42px; border-radius:50%; background:{{ step.color }}; display:flex; align-items:center; justify-content:center; font-size:21px;">{{ step.icon }}</div>
+                    <div style="font-size:16px; font-weight:700; color:#5f5045;">{{ step.label }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#EDF5F0; border-top:1px solid #e0ecd9; border-bottom:1px solid #e0ecd9;">
+          <div style="max-width:1000px; margin:0 auto; padding:48px 20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:24px; text-align:center;" data-reveal="up">
+            <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+              <div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:42px; color:{{ s.color }};">{{ s.num }}</div>
+                <div style="color:#6f5f52; font-weight:700; font-size:15px;">{{ s.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- GALERIA -->
+    <sc-if value="{{ isGaleria }}" hint-placeholder-val="{{ true }}">
+      <section class="sec" style="max-width:1180px; margin:0 auto; padding:44px 20px 60px;">
+        <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:40px; margin:0 0 6px;">Nuestros perritos</h1>
+        <p style="color:#8A7A6E; font-size:18px; margin:0 0 22px;">Filtra por estado y conoce a cada uno.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px;">
+          <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+            <button onClick="{{ f.select }}" style="{{ f.style }}">{{ f.label }}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ hasGalleryDogs }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:22px;" data-reveal="up">
+            <sc-for list="{{ galleryDogs }}" as="dog" hint-placeholder-count="4">
+              <a href="{{ dog.href }}" onClick="{{ dog.flipGo }}" style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:22px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 6px 18px rgba(74,59,51,.06); transition:transform .2s, box-shadow .2s; transform-style:preserve-3d;" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(74,59,51,.12);">
+                <div style="position:relative; aspect-ratio:1/1; overflow:hidden;">
+                  <img src="{{ dog.ahora }}" alt="{{ dog.name }}" style="width:100%; height:100%; object-fit:cover;">
+                  <span style="position:absolute; top:12px; left:12px; background:{{ dog.statusColor }}; color:#fff; font-weight:800; font-size:12px; padding:5px 12px; border-radius:999px;">{{ dog.statusLabel }}</span>
+                </div>
+                <div style="padding:16px 18px 18px;">
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:23px; color:#16808A;">{{ dog.name }}</div>
+                  <div style="color:#8A7A6E; font-size:14px; font-weight:700; margin:2px 0 10px;">{{ dog.metaLine }}</div>
+                  <div style="color:#6f5f52; font-size:15px; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ dog.excerpt }}</div>
+                </div>
+              </a>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noGalleryDogs }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:70px 20px; color:#8A7A6E; background:#FFFDF8; border:2px dashed #ddcfba; border-radius:22px;">
+            <div style="font-size:44px;">🐾</div>
+            <p style="font-weight:700; font-size:18px; margin:8px 0 0;">No hay perritos en esta categoría por ahora.</p>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <!-- DETALLE -->
+    <sc-if value="{{ isDetalle }}" hint-placeholder-val="{{ true }}">
+      <section class="sec">
+        <sc-if value="{{ currentDog }}" hint-placeholder-val="{{ true }}">
+          <div style="max-width:1080px; margin:0 auto; padding:28px 20px 60px;">
+            <a href="#/galeria" style="font-weight:800; font-size:15px; display:inline-block; margin-bottom:16px;">← Volver a los perritos</a>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:30px;" class="beforeafter">
+              <div style="position:relative; border-radius:22px; overflow:hidden; border:3px solid #16808A; aspect-ratio:4/3;">
+                <img src="{{ currentDog.antes }}" alt="" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:blur(18px) brightness(.9); transform:scale(1.15);">
+                <img src="{{ currentDog.antes }}" alt="Antes" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center;">
+                <span style="position:absolute; top:12px; left:12px; background:#16808A; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; padding:6px 18px; border-radius:999px;">ANTES</span>
+              </div>
+              <div style="position:relative; border-radius:22px; overflow:hidden; border:3px solid #6FA84E;">
+                <img src="{{ currentDog.ahora }}" alt="Ahora" style="width:100%; aspect-ratio:4/3; object-fit:cover; display:block;">
+                <span style="position:absolute; top:12px; left:12px; background:#6FA84E; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; padding:6px 18px; border-radius:999px;">AHORA</span>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:30px; align-items:start;" class="detailgrid">
+              <div>
+                <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:10px;">
+                  <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:52px; margin:0; color:#16808A; line-height:1;">{{ currentDog.name }}</h1>
+                  <span style="background:{{ currentDog.statusColor }}; color:#fff; font-weight:800; font-size:14px; padding:6px 16px; border-radius:999px;">{{ currentDog.statusLabel }}</span>
+                </div>
+                <h2 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:22px; color:#4A3B33; margin:22px 0 8px;">Su historia</h2>
+                <sc-for list="{{ currentDog.paragraphs }}" as="p" hint-placeholder-count="4">
+                  <p style="display:flex; gap:12px; font-size:17px; line-height:1.65; color:#5f5045; margin:0 0 14px;"><span style="color:#16808A; flex:none;">🐾</span><span>{{ p }}</span></p>
+                </sc-for>
+              </div>
+
+              <aside style="display:flex; flex-direction:column; gap:18px;">
+                <div style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:20px; padding:20px 22px;">
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:20px; color:#16808A; margin-bottom:12px;">Datos de {{ currentDog.name }}</div>
+                  <div style="display:flex; flex-direction:column; gap:10px;">
+                    <sc-for list="{{ currentDog.facts }}" as="fact" hint-placeholder-count="6">
+                      <div style="display:flex; align-items:center; gap:10px; font-size:16px; font-weight:700; color:#5f5045;"><span style="color:{{ fact.color }};">🐾</span>{{ fact.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <sc-if value="{{ currentDog.showDonate }}" hint-placeholder-val="{{ true }}">
+                  <div style="background:linear-gradient(160deg,#16808A,#0F6068); color:#fff; border-radius:20px; padding:22px;">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:20px; margin-bottom:4px;">Apadrina a {{ currentDog.name }}</div>
+                    <div style="font-size:14px; opacity:.9; margin-bottom:12px;">Ayúdanos a cubrir su guardería, alimento y tratamiento.</div>
+                    <div style="background:rgba(255,255,255,.25); height:12px; border-radius:999px; overflow:hidden; margin-bottom:8px;">
+                      <div style="height:100%; background:#F0A95C; border-radius:999px; width:{{ currentDog.pct }};"></div>
+                    </div>
+                    <div style="font-weight:800; font-size:15px; margin-bottom:14px;">{{ currentDog.recaudadoFmt }} de {{ currentDog.metaFmt }} recaudados</div>
+                    <button onClick="{{ currentDog.openDonate }}" style="width:100%; background:#fff; color:#16808A; font-weight:800; font-size:16px; padding:12px; border:none; border-radius:999px; cursor:pointer;">Donar a {{ currentDog.name }} ♥</button>
+                  </div>
+                </sc-if>
+
+                <a href="{{ waLink }}" target="_blank" style="text-align:center; background:#6FA84E; color:#fff; font-weight:800; font-size:16px; padding:14px; border-radius:999px;" style-hover="background:#5c9040;">Quiero adoptar a {{ currentDog.name }}</a>
+              </aside>
+            </div>
+
+            <sc-if value="{{ currentDog.hasGallery }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:38px;">
+                <h2 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:22px; margin:0 0 14px;">Más fotos</h2>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px;">
+                  <sc-for list="{{ currentDog.gallery }}" as="g" hint-placeholder-count="3">
+                    <img src="{{ g }}" alt="Foto de {{ currentDog.name }}" style="width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:16px; border:1px solid #ece0cb;">
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+        <sc-if value="{{ dogNotFound }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:90px 20px; color:#8A7A6E;">
+            <p style="font-weight:700; font-size:20px;">No encontramos a ese perrito.</p>
+            <a href="#/galeria" style="font-weight:800;">Ver todos los perritos →</a>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <!-- QUIENES SOMOS -->
+    <sc-if value="{{ isQuienes }}" hint-placeholder-val="{{ true }}">
+      <section class="sec" style="max-width:1080px; margin:0 auto; padding:44px 20px 60px;">
+        <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:42px; margin:0 0 6px;">¿Quiénes somos?</h1>
+        <p style="color:#8A7A6E; font-size:18px; margin:0 0 30px;">Vecinas y vecinos con una misión de arcoíris.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;" class="detailgrid">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:20px; padding:22px 24px;">
+              <p style="font-size:18px; line-height:1.6; margin:0; color:#5f5045;">Somos un grupo de vecinos y vecinas que ayudamos a animalitos en situación de calle, maltrato, abandono, sin comida, sin hogar o con enfermedades.</p>
+            </div>
+            <div style="background:#efe7f6; border:1px solid #e2d5ee; border-radius:20px; padding:18px 24px; display:flex; align-items:center; gap:12px;">
+              <span style="font-size:26px;">🐾</span>
+              <p style="font-size:18px; font-weight:800; margin:0; color:#8467a8;">Somos un grupo sin ánimo de lucro.</p>
+            </div>
+            <div style="background:#FFF6E4; border:1px solid #f2e3c2; border-radius:20px; padding:20px 24px;">
+              <p style="font-size:18px; line-height:1.6; margin:0; color:#5f5045;">Nuestro objetivo es prepararlos para encontrar <b style="color:#EF9BB4;">una familia amorosa y responsable.</b></p>
+            </div>
+          </div>
+          <div style="background:#EDF5F0; border:1px solid #e0ecd9; border-radius:20px; padding:24px;">
+            <h2 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:24px; color:#6FA84E; margin:0 0 16px;">¿Qué hacemos con cada rescate?</h2>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <sc-for list="{{ rescueSteps }}" as="step" hint-placeholder-count="5">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <div style="flex:none; width:44px; height:44px; border-radius:50%; background:{{ step.color }}; display:flex; align-items:center; justify-content:center; font-size:22px;">{{ step.icon }}</div>
+                  <div style="font-size:17px; font-weight:700; color:#5f5045;">{{ step.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- COMO ADOPTAR -->
+    <sc-if value="{{ isAdoptar }}" hint-placeholder-val="{{ true }}">
+      <section class="sec" style="max-width:1000px; margin:0 auto; padding:44px 20px 60px;">
+        <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:42px; margin:0 0 6px;">Cómo adoptar</h1>
+        <p style="color:#8A7A6E; font-size:18px; margin:0 0 30px;">La adopción es responsable, gratuita y con seguimiento. Estos son los pasos:</p>
+        <div style="display:flex; flex-direction:column; gap:16px;" data-reveal="up">
+          <sc-for list="{{ adoptSteps }}" as="step" hint-placeholder-count="4">
+            <div style="display:flex; gap:18px; align-items:flex-start; background:#FFFDF8; border:1px solid #ece0cb; border-radius:20px; padding:20px 24px;">
+              <div style="flex:none; width:48px; height:48px; border-radius:50%; background:{{ step.color }}; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; display:flex; align-items:center; justify-content:center;">{{ step.n }}</div>
+              <div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:20px; color:#4A3B33;">{{ step.title }}</div>
+                <div style="font-size:16px; line-height:1.55; color:#6f5f52; margin-top:3px;">{{ step.text }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="text-align:center; margin-top:32px;">
+          <a href="{{ waLink }}" target="_blank" style="display:inline-block; background:#16808A; color:#fff; font-weight:800; font-size:18px; padding:16px 34px; border-radius:999px;" style-hover="background:#0F6068;">Iniciar mi adopción por WhatsApp</a>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- DONACIONES -->
+    <sc-if value="{{ isDonaciones }}" hint-placeholder-val="{{ true }}">
+      <section class="sec" style="max-width:1080px; margin:0 auto; padding:44px 20px 60px;">
+        <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:42px; margin:0 0 6px;">Haz una donación</h1>
+        <p style="color:#8A7A6E; font-size:18px; margin:0 0 30px; max-width:640px;">Cada aporte cubre veterinario, esterilización, alimento y guardería. Puedes donar de forma general o elegir un perrito en específico.</p>
+
+        <div style="background:linear-gradient(160deg,#16808A,#0F6068); color:#fff; border-radius:24px; padding:30px; margin-bottom:34px; display:flex; flex-wrap:wrap; gap:24px; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:28px;">Donación general</div>
+            <div style="font-size:16px; opacity:.9; max-width:420px;">Apoya a todos los rescates. Tú eliges el monto y el método.</div>
+          </div>
+          <button onClick="{{ openGeneralDonate }}" style="background:#fff; color:#16808A; font-weight:800; font-size:17px; padding:14px 30px; border:none; border-radius:999px; cursor:pointer;">Donar ahora ♥</button>
+        </div>
+
+        <h2 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:26px; margin:0 0 18px;">Apadrina a un perrito</h2>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:20px;" data-reveal="up">
+          <sc-for list="{{ donacionDogs }}" as="dog" hint-placeholder-count="3">
+            <div style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:20px; padding:16px; display:flex; gap:14px; align-items:stretch;">
+              <img src="{{ dog.ahora }}" alt="{{ dog.name }}" style="width:82px; height:82px; border-radius:16px; object-fit:cover; flex:none;">
+              <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:19px; line-height:1.2; color:#16808A; min-height:46px; display:flex; align-items:center;">{{ dog.name }} · {{ dog.edad }}</div>
+                <div style="background:#eadfce; height:10px; border-radius:999px; overflow:hidden; margin:0 0 6px;">
+                  <div style="height:100%; background:#6FA84E; border-radius:999px; width:{{ dog.pct }};"></div>
+                </div>
+                <div style="font-size:13px; font-weight:700; color:#8A7A6E; margin-bottom:12px;">{{ dog.recaudadoFmt }} de {{ dog.metaFmt }} recaudados</div>
+                <button onClick="{{ dog.openDonate }}" style="margin-top:auto; align-self:flex-start; background:#16808A; color:#fff; font-weight:800; font-size:14px; padding:9px 18px; border:none; border-radius:999px; cursor:pointer;">Donar a {{ dog.name }}</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- HISTORIAS FELICES -->
+    <sc-if value="{{ isHistorias }}" hint-placeholder-val="{{ true }}">
+      <section class="sec" style="max-width:1080px; margin:0 auto; padding:44px 20px 60px;">
+        <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:42px; margin:0 0 6px;">Historias felices</h1>
+        <p style="color:#8A7A6E; font-size:18px; margin:0 0 30px;">Perritos que ya encontraron su hogar de arcoíris. ♥</p>
+        <sc-if value="{{ hasHistorias }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:22px;" data-reveal="up">
+            <sc-for list="{{ historiasDogs }}" as="dog" hint-placeholder-count="2">
+              <a href="{{ dog.href }}" onClick="{{ dog.flipGo }}" style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:22px; overflow:hidden; box-shadow:0 6px 18px rgba(74,59,51,.06); transform-style:preserve-3d;" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(74,59,51,.12);">
+                <div style="display:grid; grid-template-columns:1fr 1fr;">
+                  <img src="{{ dog.antes }}" alt="Antes" style="width:100%; aspect-ratio:1/1; object-fit:cover;">
+                  <img src="{{ dog.ahora }}" alt="Ahora" style="width:100%; aspect-ratio:1/1; object-fit:cover;">
+                </div>
+                <div style="padding:16px 18px 18px;">
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; color:#6FA84E;">{{ dog.name }} · Adoptado ♥</div>
+                  <div style="color:#6f5f52; font-size:15px; line-height:1.5; margin-top:4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ dog.excerpt }}</div>
+                </div>
+              </a>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noHistorias }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:70px 20px; color:#8A7A6E; background:#FFFDF8; border:2px dashed #ddcfba; border-radius:22px;">
+            <div style="font-size:44px;">🌈</div>
+            <p style="font-weight:700; font-size:18px; margin:8px 0 0;">Pronto compartiremos las primeras historias felices.</p>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <!-- CONTACTO -->
+    <sc-if value="{{ isContacto }}" hint-placeholder-val="{{ true }}">
+      <section class="sec" style="max-width:1000px; margin:0 auto; padding:44px 20px 60px;">
+        <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:42px; margin:0 0 6px;">Contacto</h1>
+        <p style="color:#8A7A6E; font-size:18px; margin:0 0 30px;">Escríbenos para adoptar, donar o sumarte como voluntario.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;" class="detailgrid">
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <a href="{{ waLink }}" target="_blank" style="display:flex; align-items:center; gap:14px; background:#FFFDF8; border:1px solid #ece0cb; border-radius:18px; padding:18px 22px;" style-hover="border-color:#6FA84E;">
+              <span style="width:46px; height:46px; border-radius:50%; background:#6FA84E; color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px;">💬</span>
+              <span><b style="display:block; color:#4A3B33; font-size:17px;">WhatsApp</b><span style="color:#6f5f52;">{{ whatsapp }}</span></span>
+            </a>
+            <a href="{{ igLink }}" target="_blank" style="display:flex; align-items:center; gap:14px; background:#FFFDF8; border:1px solid #ece0cb; border-radius:18px; padding:18px 22px;" style-hover="border-color:#EF9BB4;">
+              <span style="width:46px; height:46px; border-radius:50%; background:#EF9BB4; color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px;">📷</span>
+              <span><b style="display:block; color:#4A3B33; font-size:17px;">Instagram</b><span style="color:#6f5f52;">@{{ instagram }}</span></span>
+            </a>
+            <div style="display:flex; align-items:center; gap:14px; background:#FFFDF8; border:1px solid #ece0cb; border-radius:18px; padding:18px 22px;">
+              <span style="width:46px; height:46px; border-radius:50%; background:#F0A95C; color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px;">📍</span>
+              <span><b style="display:block; color:#4A3B33; font-size:17px;">Ubicación</b><span style="color:#6f5f52;">Querétaro, México</span></span>
+            </div>
+          </div>
+          <div style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:22px; padding:24px; text-align:center;">
+            <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:20px; color:#16808A; margin-bottom:14px;">Síguenos en Instagram</div>
+            <a href="{{ igLink }}" target="_blank" style="display:block;">
+              <img src="{{ igQr }}" alt="QR de Instagram" style="width:min(280px,90%); border-radius:16px; cursor:pointer;">
+            </a>
+            <a href="{{ igLink }}" target="_blank" style="display:inline-block; color:#8A7A6E; font-weight:800; margin:12px 0 0;">@{{ instagram }} →</a>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ADMIN -->
+    <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ true }}">
+      <section class="sec" style="max-width:1000px; margin:0 auto; padding:44px 20px 60px;">
+        <sc-if value="{{ adminLocked }}" hint-placeholder-val="{{ true }}">
+          <div style="max-width:420px; margin:40px auto; background:#FFFDF8; border:1px solid #ece0cb; border-radius:22px; padding:34px; text-align:center;">
+            <div style="font-size:44px;">🔒</div>
+            <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:28px; margin:8px 0 4px;">Panel de administrador</h1>
+            <p style="color:#8A7A6E; margin:0 0 20px;">Ingresa la contraseña para publicar perritos.</p>
+            <input type="password" value="{{ loginValue }}" onInput="{{ onLoginInput }}" onKeyDown="{{ onLoginKey }}" placeholder="Contraseña" style="width:100%; padding:13px 16px; border:2px solid #e0d3bf; border-radius:12px; font-size:16px; margin-bottom:12px;">
+            <sc-if value="{{ loginError }}" hint-placeholder-val="{{ false }}">
+              <div style="color:#d9534f; font-weight:700; font-size:14px; margin-bottom:12px;">Contraseña incorrecta.</div>
+            </sc-if>
+            <button onClick="{{ doLogin }}" style="width:100%; background:#16808A; color:#fff; font-weight:800; font-size:16px; padding:13px; border:none; border-radius:999px; cursor:pointer;">Entrar</button>
+            <p style="color:#b6a48f; font-size:13px; margin:14px 0 0;">Demo: la contraseña es <b>{{ adminPassword }}</b></p>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ adminUnlocked }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:8px;">
+              <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:38px; margin:0;">Panel de administrador</h1>
+              <button onClick="{{ doLogout }}" style="background:#f4e7d3; color:#8a6a3a; font-weight:800; font-size:14px; padding:9px 18px; border:none; border-radius:999px; cursor:pointer;">Cerrar sesión</button>
+            </div>
+            <p style="color:#8A7A6E; font-size:17px; margin:0 0 26px;">Llena el template y publica un perrito nuevo al instante. No necesitas tocar código.</p>
+
+            <div style="background:#FFF6E4; border:1px solid #f2e3c2; border-radius:16px; padding:14px 18px; margin-bottom:26px; font-size:14px; color:#8a6a3a; line-height:1.5;">
+              <b>Nota:</b> en esta demo los perritos se guardan en este navegador. Para que queden publicados en línea para todos los visitantes, se conecta después un servicio de base de datos.
+            </div>
+
+            <div style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:22px; padding:26px;">
+              <h2 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:24px; color:#16808A; margin:0 0 18px;">{{ formTitle }}</h2>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;" class="formgrid">
+                <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Nombre *
+                  <input type="text" value="{{ form.name }}" onInput="{{ onFieldName }}" placeholder="Ej. Rocky" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Estado
+                  <select value="{{ form.estado }}" onChange="{{ onFieldEstado }}" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600; background:#fff;">
+                    <option value="adopcion">En adopción</option>
+                    <option value="tratamiento">En tratamiento</option>
+                    <option value="adoptado">Adoptado</option>
+                  </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Sexo
+                  <select value="{{ form.sexo }}" onChange="{{ onFieldSexo }}" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600; background:#fff;">
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                  </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Edad
+                  <input type="text" value="{{ form.edad }}" onInput="{{ onFieldEdad }}" placeholder="Ej. 3 años aprox." style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Tamaño
+                  <select value="{{ form.tamano }}" onChange="{{ onFieldTamano }}" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600; background:#fff;">
+                    <option value="Pequeño">Pequeño</option>
+                    <option value="Mediano">Mediano</option>
+                    <option value="Grande">Grande</option>
+                  </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Ubicación
+                  <input type="text" value="{{ form.ubicacion }}" onInput="{{ onFieldUbicacion }}" placeholder="Ej. Querétaro" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600;">
+                </label>
+              </div>
+
+              <div style="display:flex; gap:24px; margin:16px 0; flex-wrap:wrap;">
+                <label style="display:flex; align-items:center; gap:9px; font-weight:800; color:#5f5045; font-size:15px; cursor:pointer;">
+                  <input type="checkbox" checked="{{ form.vacunado }}" onChange="{{ onFieldVacunado }}" style="width:20px; height:20px; accent-color:#16808A;">Vacunado
+                </label>
+                <label style="display:flex; align-items:center; gap:9px; font-weight:800; color:#5f5045; font-size:15px; cursor:pointer;">
+                  <input type="checkbox" checked="{{ form.esterilizado }}" onChange="{{ onFieldEsterilizado }}" style="width:20px; height:20px; accent-color:#16808A;">Esterilizado
+                </label>
+              </div>
+
+              <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px; margin-bottom:16px;">Historia
+                <textarea value="{{ form.historia }}" onInput="{{ onFieldHistoria }}" rows="6" placeholder="Cuenta su rescate y su transformación. Separa los párrafos con una línea en blanco." style="padding:12px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600; line-height:1.5; resize:vertical;"></textarea>
+              </label>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;" class="formgrid">
+                <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Meta de donación ($)
+                  <input type="number" value="{{ form.meta }}" onInput="{{ onFieldMeta }}" placeholder="6000" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Recaudado ($)
+                  <input type="number" value="{{ form.recaudado }}" onInput="{{ onFieldRecaudado }}" placeholder="0" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600;">
+                </label>
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;" class="formgrid">
+                <div>
+                  <div style="font-weight:800; color:#5f5045; font-size:14px; margin-bottom:6px;">Foto ANTES</div>
+                  <label style="display:block; border:2px dashed #cdbfa8; border-radius:14px; padding:14px; text-align:center; cursor:pointer; background:#fdf8ef;" style-hover="border-color:#16808A;">
+                    <sc-if value="{{ form.antes }}" hint-placeholder-val="{{ false }}"><img src="{{ form.antes }}" style="max-height:120px; border-radius:10px; margin-bottom:6px;"></sc-if>
+                    <div style="color:#8A7A6E; font-weight:700; font-size:14px;">📷 {{ antesLabel }}</div>
+                    <input type="file" accept="image/*" onChange="{{ onFileAntes }}" style="display:none;">
+                  </label>
+                </div>
+                <div>
+                  <div style="font-weight:800; color:#5f5045; font-size:14px; margin-bottom:6px;">Foto AHORA / principal</div>
+                  <label style="display:block; border:2px dashed #cdbfa8; border-radius:14px; padding:14px; text-align:center; cursor:pointer; background:#fdf8ef;" style-hover="border-color:#16808A;">
+                    <sc-if value="{{ form.ahora }}" hint-placeholder-val="{{ false }}"><img src="{{ form.ahora }}" style="max-height:120px; border-radius:10px; margin-bottom:6px;"></sc-if>
+                    <div style="color:#8A7A6E; font-weight:700; font-size:14px;">📷 {{ ahoraLabel }}</div>
+                    <input type="file" accept="image/*" onChange="{{ onFileAhora }}" style="display:none;">
+                  </label>
+                </div>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <div style="font-weight:800; color:#5f5045; font-size:14px; margin-bottom:6px;">Galería (varias fotos)</div>
+                <label style="display:block; border:2px dashed #cdbfa8; border-radius:14px; padding:14px; text-align:center; cursor:pointer; background:#fdf8ef;" style-hover="border-color:#16808A;">
+                  <div style="color:#8A7A6E; font-weight:700; font-size:14px;">📷 {{ galleryLabel }}</div>
+                  <input type="file" accept="image/*" multiple="true" onChange="{{ onFileGallery }}" style="display:none;">
+                </label>
+              </div>
+
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <button onClick="{{ submitForm }}" style="background:#16808A; color:#fff; font-weight:800; font-size:17px; padding:14px 30px; border:none; border-radius:999px; cursor:pointer;" style-hover="background:#0F6068;">{{ submitLabel }}</button>
+                <button onClick="{{ resetForm }}" style="background:#f4e7d3; color:#8a6a3a; font-weight:800; font-size:15px; padding:14px 24px; border:none; border-radius:999px; cursor:pointer;">Limpiar</button>
+              </div>
+            </div>
+
+            <h2 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:24px; margin:34px 0 14px;">Perritos publicados ({{ dogCount }})</h2>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ adminDogs }}" as="dog" hint-placeholder-count="3">
+                <div class="admin-row" style="display:flex; align-items:center; gap:14px; background:#FFFDF8; border:1px solid #ece0cb; border-radius:16px; padding:10px 14px;">
+                  <img src="{{ dog.ahora }}" alt="{{ dog.name }}" style="width:52px; height:52px; border-radius:12px; object-fit:cover; flex:none;">
+                  <div style="flex:1; min-width:0;">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; color:#16808A;">{{ dog.name }}</div>
+                    <div style="font-size:13px; font-weight:700; color:#8A7A6E;">{{ dog.statusLabel }} · {{ dog.edad }}</div>
+                  </div>
+                  <a href="{{ dog.href }}" style="font-weight:800; font-size:14px; padding:7px 14px; background:#E4F2F1; border-radius:999px;">Ver</a>
+                  <button onClick="{{ dog.edit }}" style="font-weight:800; font-size:14px; padding:7px 14px; background:#efe7f6; color:#8467a8; border:none; border-radius:999px; cursor:pointer;">Editar</button>
+                  <button onClick="{{ dog.del }}" style="font-weight:800; font-size:14px; padding:7px 14px; background:#fbe4e2; color:#c9463f; border:none; border-radius:999px; cursor:pointer;">Borrar</button>
+                </div>
+              </sc-for>
+            </div>
+
+            <!-- FINANZAS -->
+            <div style="margin-top:44px; padding-top:8px; border-top:2px dashed #e6d8c2;">
+              <h2 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:28px; margin:22px 0 4px;">💰 Finanzas</h2>
+              <p style="color:#8A7A6E; font-size:16px; margin:0 0 20px;">Lleva el control de las donaciones (ingresos) y los gastos de cada perrito.</p>
+
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:26px;" class="formgrid">
+                <sc-for list="{{ finSummary }}" as="c" hint-placeholder-count="3">
+                  <div style="background:{{ c.bg }}; border:1px solid #ece0cb; border-radius:18px; padding:18px 20px;">
+                    <div style="font-size:14px; font-weight:800; color:#8A7A6E; text-transform:uppercase; letter-spacing:.4px;">{{ c.label }}</div>
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:30px; color:{{ c.color }}; margin-top:4px;">{{ c.value }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:22px; padding:24px; margin-bottom:26px;">
+                <h3 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:20px; color:#16808A; margin:0 0 16px;">Registrar movimiento</h3>
+                <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:14px; margin-bottom:14px;" class="formgrid">
+                  <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Perrito
+                    <select value="{{ finForm.dogId }}" onChange="{{ onFinDog }}" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600; background:#fff;">
+                      <sc-for list="{{ finDogOptions }}" as="o" hint-placeholder-count="4">
+                        <option value="{{ o.value }}">{{ o.label }}</option>
+                      </sc-for>
+                    </select>
+                  </label>
+                  <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Tipo
+                    <select value="{{ finForm.tipo }}" onChange="{{ onFinTipo }}" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600; background:#fff;">
+                      <option value="ingreso">Ingreso (donación)</option>
+                      <option value="gasto">Gasto</option>
+                    </select>
+                  </label>
+                  <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Fecha
+                    <input type="date" value="{{ finForm.fecha }}" onInput="{{ onFinFecha }}" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600;">
+                  </label>
+                </div>
+                <div style="display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-bottom:16px;" class="formgrid">
+                  <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Concepto
+                    <input type="text" value="{{ finForm.concepto }}" onInput="{{ onFinConcepto }}" placeholder="Ej. Vacunas, guardería, donación..." style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600;">
+                  </label>
+                  <label style="display:flex; flex-direction:column; gap:6px; font-weight:800; color:#5f5045; font-size:14px;">Monto ($)
+                    <input type="number" value="{{ finForm.monto }}" onInput="{{ onFinMonto }}" placeholder="0" style="padding:11px 14px; border:2px solid #e0d3bf; border-radius:12px; font-size:15px; font-weight:600;">
+                  </label>
+                </div>
+                <button onClick="{{ addMovement }}" style="background:#16808A; color:#fff; font-weight:800; font-size:16px; padding:12px 26px; border:none; border-radius:999px; cursor:pointer;" style-hover="background:#0F6068;">Agregar movimiento</button>
+              </div>
+
+              <h3 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:20px; margin:0 0 12px;">Balance por perrito</h3>
+              <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; margin-bottom:30px;">
+                <sc-for list="{{ finGroups }}" as="g" hint-placeholder-count="4">
+                  <div style="background:#FFFDF8; border:1px solid #ece0cb; border-radius:16px; padding:14px 16px;">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:17px; color:#4A3B33; margin-bottom:8px;">{{ g.name }}</div>
+                    <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; color:#6FA84E;"><span>Ingresos</span><span>{{ g.ingFmt }}</span></div>
+                    <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; color:#D98A57; margin:3px 0;"><span>Gastos</span><span>{{ g.gasFmt }}</span></div>
+                    <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:800; color:{{ g.balColor }}; border-top:1px solid #eee2ce; padding-top:6px; margin-top:6px;"><span>Balance</span><span>{{ g.balFmt }}</span></div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <h3 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:20px; margin:0 0 12px;">Movimientos ({{ finCount }})</h3>
+              <sc-if value="{{ hasFin }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  <sc-for list="{{ finList }}" as="m" hint-placeholder-count="5">
+                    <div style="display:flex; align-items:center; gap:12px; background:#FFFDF8; border:1px solid #ece0cb; border-radius:14px; padding:10px 14px;">
+                      <span style="flex:none; font-size:12px; font-weight:800; padding:4px 10px; border-radius:999px; background:{{ m.tipoBg }}; color:{{ m.tipoColor }};">{{ m.tipoLabel }}</span>
+                      <div style="flex:1; min-width:0;">
+                        <div style="font-weight:800; color:#4A3B33; font-size:15px;">{{ m.concepto }}</div>
+                        <div style="font-size:13px; font-weight:700; color:#8A7A6E;">{{ m.dogName }} · {{ m.fecha }}</div>
+                      </div>
+                      <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:17px; color:{{ m.tipoColor }};">{{ m.amountFmt }}</div>
+                      <button onClick="{{ m.del }}" style="flex:none; font-weight:800; font-size:13px; padding:6px 12px; background:#fbe4e2; color:#c9463f; border:none; border-radius:999px; cursor:pointer;">Borrar</button>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ noFin }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center; padding:40px 20px; color:#8A7A6E; background:#FFFDF8; border:2px dashed #ddcfba; border-radius:18px;">Aún no hay movimientos registrados.</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+  </main>
+
+  <footer style="background:#16808A; color:#fff; margin-top:auto;">
+    <div style="max-width:1180px; margin:0 auto; padding:40px 20px; display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:30px;" class="footgrid">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <img src="{{ logoSrc }}" alt="" style="height:50px; width:50px; object-fit:contain;">
+          <span style="font-family:'Baloo 2',cursive; font-weight:800; font-size:22px;">Huellitas Arcoíris</span>
+        </div>
+        <p style="opacity:.9; line-height:1.6; margin:0; max-width:340px;">Grupo de rescate sin ánimo de lucro. Rescatamos, curamos y buscamos familias de arcoíris para cada huella.</p>
+      </div>
+      <div>
+        <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; margin-bottom:10px;">Explora</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a href="#/galeria" style="color:#d7efee;">Perritos</a>
+          <a href="#/quienes" style="color:#d7efee;">Quiénes somos</a>
+          <a href="#/adoptar" style="color:#d7efee;">Cómo adoptar</a>
+          <a href="#/donaciones" style="color:#d7efee;">Donaciones</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; margin-bottom:10px;">Contacto</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a href="{{ waLink }}" target="_blank" style="color:#d7efee;">WhatsApp: {{ whatsapp }}</a>
+          <a href="{{ igLink }}" target="_blank" style="color:#d7efee;">Instagram: @{{ instagram }}</a>
+          <span style="color:#d7efee;">Querétaro, México</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.2); display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center; padding:16px; font-size:13px;">
+      <span style="opacity:.75;">© 2026 Huellitas Arcoíris · Hecho con ♥ para los que no tienen voz</span>
+      <a href="#/admin" style="color:#bfe3e1; font-weight:800; opacity:.9; border:1px solid rgba(255,255,255,.35); padding:4px 12px; border-radius:999px;">Acceso administrador</a>
+    </div>
+  </footer>
+
+  <!-- DONATE MODAL -->
+  <sc-if value="{{ donateOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeDonate }}" style="position:fixed; inset:0; z-index:60; background:rgba(74,59,51,.55); display:flex; align-items:center; justify-content:center; padding:20px;">
+      <div onClick="{{ stop }}" style="background:#FBF4E8; border-radius:24px; max-width:460px; width:100%; padding:28px; max-height:90vh; overflow:auto;">
+        <div style="display:flex; align-items:start; justify-content:space-between; gap:12px;">
+          <h2 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:26px; margin:0; color:#16808A;">{{ donateTitle }}</h2>
+          <button onClick="{{ closeDonate }}" style="border:none; background:#e9ddc8; width:36px; height:36px; border-radius:50%; font-size:18px; cursor:pointer; flex:none;">✕</button>
+        </div>
+        <p style="color:#6f5f52; font-size:15px; margin:6px 0 18px;">Elige un monto y tu método preferido. Te llevaremos al pago seguro.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+          <sc-for list="{{ donateAmounts }}" as="amt" hint-placeholder-count="4">
+            <button onClick="{{ amt.select }}" style="{{ amt.style }}">{{ amt.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <sc-for list="{{ donateMethods }}" as="m" hint-placeholder-count="3">
+            <a href="{{ m.href }}" target="_blank" style="display:flex; align-items:center; gap:14px; background:#FFFDF8; border:2px solid #ece0cb; border-radius:16px; padding:14px 18px;" style-hover="border-color:#16808A;">
+              <span style="width:44px; height:44px; border-radius:12px; background:{{ m.color }}; color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; flex:none;">{{ m.icon }}</span>
+              <span style="flex:1;"><b style="display:block; color:#4A3B33; font-size:16px;">{{ m.name }}</b><span style="color:#8A7A6E; font-size:13px;">{{ m.desc }}</span></span>
+              <span style="color:#16808A; font-weight:800;">→</span>
+            </a>
+          </sc-for>
+        </div>
+        <p style="color:#b6a48f; font-size:12px; text-align:center; margin:18px 0 0;">Los enlaces de pago se conectan al activar tu cuenta (Mercado Pago, PayPal o Stripe).</p>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:70; background:#6FA84E; color:#fff; font-weight:800; padding:14px 26px; border-radius:999px; box-shadow:0 10px 26px rgba(0,0,0,.2);">{{ toast }}</div>
+  </sc-if>
+
+  <style>
+    @media (max-width: 860px) {
+      header nav[data-nav] { display: none !important; }
+      header nav[data-nav][data-open="1"] { display: flex !important; position: absolute; top:100%; left:0; right:0; flex-direction:column; background:#FBF4E8; padding:12px 20px 18px; border-bottom:1px solid #ece0cb; gap:4px !important; }
+      header button[aria-label="Menú"] { display: block !important; }
+    }
+    header nav a { transition: background .18s ease, color .18s ease, transform .18s ease; }
+    header nav a:hover { background:#E4F2F1 !important; color:#0F6068 !important; transform:translateY(-1px); }
+    footer a { transition: color .18s ease; }
+    @media (max-width: 860px) {
+      header nav[data-nav][data-open="1"] a { padding:12px 10px !important; font-size:16px !important; border-bottom:1px solid #f0e5d2; }
+      footer > div:first-child { padding:28px 20px !important; }
+    }
+    @media (max-width: 620px) {
+      /* espaciados y tipografía para teléfono */
+      main section, main > section { }
+      .m-pad { padding-left:16px !important; padding-right:16px !important; }
+      /* apila el antes/después con blur ya cubierto por .beforeafter */
+      .admin-row { flex-wrap:wrap !important; }
+      .admin-row a, .admin-row button { flex:1 1 auto !important; text-align:center; }
+    }
+    @media (max-width: 460px) {
+      header img[alt="Huellitas Arcoíris"] { height:44px !important; width:44px !important; }
+    }
+  </style>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;55 2659 1490&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;instagram&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;huellitas_arcoiris&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;adminPassword&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;huellitas&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Administrador&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.state = {
+      route: 'home', routeId: null,
+      dogs: [], filter: 'todos', menuOpen: false,
+      admin: false, loginValue: '', loginError: false,
+      form: this.blankForm(), editingId: null,
+      donateId: '__none__', donateOpen: false, donateAmount: 200,
+      fin: [], finForm: this.blankFinForm(),
+      toast: ''
+    };
+    this.STORE = 'huellitas_dogs_v3';
+    this.STORE_FIN = 'huellitas_fin_v1';
+    this.STATUS = {
+      adopcion: { label: 'En adopción', color: '#16808A' },
+      tratamiento: { label: 'En tratamiento', color: '#E39A4E' },
+      adoptado: { label: 'Adoptado ♥', color: '#6FA84E' }
+    };
+  }
+
+  blankForm(){
+    return { name:'', estado:'adopcion', sexo:'Macho', edad:'', tamano:'Mediano',
+      ubicacion:'Querétaro', vacunado:true, esterilizado:true, historia:'',
+      meta:'', recaudado:'', antes:'', ahora:'', gallery:[] };
+  }
+
+  blankFinForm(){
+    const today = new Date().toISOString().slice(0,10);
+    return { dogId:'__general__', tipo:'ingreso', concepto:'', monto:'', fecha:today };
+  }
+
+  seedFin(){
+    return [
+      { id:'f1', dogId:'rocky', tipo:'ingreso', concepto:'Donación general', monto:2400, fecha:'2026-05-10' },
+      { id:'f2', dogId:'rocky', tipo:'gasto', concepto:'Guardería (mes)', monto:1800, fecha:'2026-05-15' },
+      { id:'f3', dogId:'rocky', tipo:'gasto', concepto:'Vacunas y desparasitación', monto:650, fecha:'2026-04-28' },
+      { id:'f4', dogId:'victoria', tipo:'ingreso', concepto:'Donación apadrinamiento', monto:3200, fecha:'2026-05-12' },
+      { id:'f5', dogId:'victoria', tipo:'gasto', concepto:'Tratamiento dermatológico', monto:2100, fecha:'2026-05-18' },
+      { id:'f6', dogId:'manchas', tipo:'ingreso', concepto:'Donaciones varias', monto:4100, fecha:'2026-05-20' },
+      { id:'f7', dogId:'manchas', tipo:'gasto', concepto:'Esterilización', monto:900, fecha:'2026-05-02' },
+      { id:'f8', dogId:'__general__', tipo:'gasto', concepto:'Alimento (bulto)', monto:1200, fecha:'2026-05-22' }
+    ];
+  }
+
+  ph(label, tint){
+    const c = tint || '#eadfce';
+    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='800' height='800'>"+
+      "<defs><pattern id='s' width='28' height='28' patternTransform='rotate(45)' patternUnits='userSpaceOnUse'>"+
+      "<rect width='28' height='28' fill='#f2e9d8'/><rect width='14' height='28' fill='"+c+"'/></pattern></defs>"+
+      "<rect width='800' height='800' fill='url(#s)'/>"+
+      "<text x='50%' y='50%' font-family='monospace' font-size='34' fill='#b0a08c' text-anchor='middle' dominant-baseline='middle'>"+label+"</text></svg>";
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  }
+
+  seed(){
+    return [
+      { id:'rocky', name:'Rocky', estado:'adopcion', sexo:'Macho', edad:'3 años aprox.',
+        tamano:'Mediano', ubicacion:'Querétaro', vacunado:true, esterilizado:true,
+        antes:'rockyAntes', ahora:'rockyAhora',
+        gallery:['rockyAhora','rockyAntes'],
+        meta:6000, recaudado:2400,
+        historia:'Rocky fue rescatado de los baldíos de Zákia junto a su manada. Al principio, él y sus compañeros fueron vacunados y esterilizados, pero por falta de espacio y adoptantes tuvieron que ser liberados dentro de Zákia.\n\nDías después, una de las perritas apareció sin vida y decidimos rescatar de nuevo a Rocky y Victoria para ponerlos a salvo.\n\nDesde entonces, Rocky ha recibido guardería y entrenamiento para aprender a caminar con correa y socializar. Es un perrito tímido, pero poco a poco ha logrado grandes avances.\n\nHoy está listo para encontrar una familia paciente y amorosa.' },
+      { id:'victoria', name:'Victoria', estado:'adopcion', sexo:'Hembra', edad:'4 años aprox.',
+        tamano:'Mediano', ubicacion:'Querétaro', vacunado:true, esterilizado:true,
+        antes:'victoriaAntes', ahora:'victoriaAhora',
+        gallery:['victoriaExtra'], meta:7000, recaudado:3200,
+        historia:'Victoria fue rescatada de los baldíos de Zákia junto a su manada. Nuestro principal objetivo era ayudarla, porque tenía su piel muy lastimada por un hongo que al principio creímos que eran quemaduras. Ella y sus compañeros fueron vacunados y esterilizados, pero al no tener espacio ni adoptantes, tuvieron que ser liberados dentro de Zákia.\n\nDías después, una de las perritas apareció sin vida y decidimos rescatar de nuevo a Victoria y Rocky para ponerlos a salvo.\n\nDesde entonces, Victoria recibió tratamiento para su piel, guardería y entrenamiento para aprender a caminar con correa y socializar. Poco a poco ha logrado grandes avances.\n\nHoy está recuperada y lista para encontrar una familia que la ame.' },
+      { id:'caramelo', name:'Caramelo', estado:'adopcion', sexo:'Macho', edad:'2 años',
+        tamano:'Mediano', ubicacion:'Querétaro', vacunado:true, esterilizado:true,
+        antes:'carameloHead', ahora:'carameloAhora',
+        gallery:['carameloHead'], meta:5500, recaudado:1500,
+        historia:'Caramelo fue rescatado junto con su amigo Negrito en el Walmart de Zákia. Negrito fue baleado y la vida de los dos corría mucho peligro en la calle. (Negrito ya tiene familia.)\n\nHoy Caramelo está listo para encontrar una familia. Es juguetón, amoroso y convive muy bien con otros perros y con niños.\n\n¡Dale la oportunidad de ser parte de tu vida!' },
+      { id:'manchas', name:'Manchas', estado:'adopcion', sexo:'Macho', edad:'1 año',
+        tamano:'Mediano', ubicacion:'Querétaro', vacunado:true, esterilizado:true,
+        antes:this.ph('foto ANTES · Manchas','#e6d3cf'), ahora:this.ph('foto AHORA · Manchas','#d9e3cf'),
+        gallery:[], meta:6400, recaudado:4100,
+        historia:'Manchas llegó a nosotros muy pequeño y asustado. Poco a poco ha aprendido a confiar en las personas y ahora es un perrito juguetón y cariñoso.\n\nEstá sano, vacunado y esterilizado, buscando su hogar definitivo. Tu donación cubre su guardería y alimento mientras encuentra familia.' },
+      { id:'luna', name:'Luna', estado:'adoptado', sexo:'Hembra', edad:'2 años',
+        tamano:'Pequeño', ubicacion:'Querétaro', vacunado:true, esterilizado:true,
+        antes:this.ph('foto ANTES · Luna','#e6d3cf'), ahora:this.ph('foto AHORA · Luna','#d9e3cf'),
+        gallery:[], meta:0, recaudado:0,
+        historia:'Luna vivía en situación de calle y fue rescatada con desnutrición. Tras meses de cuidados, vacunas y mucho amor, se recuperó por completo.\n\n¡Hoy vive feliz con su nueva familia! Gracias a todas las personas que hicieron posible su historia de arcoíris.' }
+    ];
+  }
+
+  componentDidMount(){
+    this.buildAssetMap();
+    let dogs;
+    try { dogs = JSON.parse(localStorage.getItem(this.STORE)); } catch(e){ dogs = null; }
+    const SEED_VER_KEY = 'huellitas_seed_ver';
+    const CUR_VER = '5';
+    if(!Array.isArray(dogs) || !dogs.length){
+      dogs = this.seed();
+    } else if(localStorage.getItem(SEED_VER_KEY) !== CUR_VER){
+      const seedDogs = this.seed();
+      const seedIds = seedDogs.map(d=>d.id);
+      const userDogs = dogs.filter(d=>seedIds.indexOf(d.id)===-1);
+      dogs = seedDogs.concat(userDogs);
+    }
+    this.persist(dogs);
+    try{ localStorage.setItem(SEED_VER_KEY, CUR_VER); }catch(e){}
+    let fin;
+    try { fin = JSON.parse(localStorage.getItem(this.STORE_FIN)); } catch(e){ fin = null; }
+    if(!Array.isArray(fin)){ fin = this.seedFin(); this.persistFin(fin); }
+    const admin = sessionStorage.getItem('huellitas_admin') === '1';
+    this.setState({ dogs, fin, admin });
+    this._onHash = () => { this.parseHash(); try{ window.scrollTo(0,0);}catch(e){} };
+    window.addEventListener('hashchange', this._onHash);
+    this.parseHash();
+    this._lastRoute = null;
+    setTimeout(()=>this.setupReveal(), 60);
+  }
+  componentWillUnmount(){ window.removeEventListener('hashchange', this._onHash); if(this._io) this._io.disconnect(); }
+  componentDidUpdate(){
+    if(this.state.route !== this._lastRoute){
+      this._lastRoute = this.state.route;
+      setTimeout(()=>this.setupReveal(), 40);
+    }
+  }
+  setupReveal(){
+    if(this._io) this._io.disconnect();
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    if(!els.length) return;
+    els.forEach((el,i)=>{
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(26px)';
+      el.style.transition = 'opacity .6s cubic-bezier(.2,.7,.3,1), transform .6s cubic-bezier(.2,.7,.3,1)';
+      el.style.transitionDelay = (Math.min(i,8) * 55) + 'ms';
+    });
+    this._io = new IntersectionObserver((ents)=>{
+      ents.forEach(e=>{ if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='none'; this._io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el=>this._io.observe(el));
+  }
+
+  parseHash(){
+    const h = (location.hash || '').replace(/^#\/?/, '');
+    const parts = h.split('/').filter(Boolean);
+    const map = { '': 'home', 'galeria':'galeria', 'perrito':'detalle', 'quienes':'quienes',
+      'adoptar':'adoptar', 'donaciones':'donaciones', 'historias':'historias', 'contacto':'contacto', 'admin':'admin' };
+    const route = map[parts[0] || ''] || 'home';
+    this.setState({ route, routeId: parts[1] || null, menuOpen:false });
+  }
+
+  persist(dogs){ try{ localStorage.setItem(this.STORE, JSON.stringify(dogs)); }catch(e){} }
+  persistFin(fin){ try{ localStorage.setItem(this.STORE_FIN, JSON.stringify(fin)); }catch(e){} }
+
+  setFinForm(patch){ this.setState(s=>({ finForm:{...s.finForm, ...patch} })); }
+  addMovement = () => {
+    const f = this.state.finForm;
+    const monto = Number(f.monto)||0;
+    if(!f.concepto.trim()){ this.showToast('Escribe el concepto'); return; }
+    if(monto<=0){ this.showToast('El monto debe ser mayor a 0'); return; }
+    const mov = { id:'f'+Date.now().toString(36), dogId:f.dogId, tipo:f.tipo,
+      concepto:f.concepto.trim(), monto, fecha:f.fecha || new Date().toISOString().slice(0,10) };
+    const fin = [mov, ...this.state.fin];
+    this.persistFin(fin);
+    this.setState({ fin, finForm:{ ...this.blankFinForm(), dogId:f.dogId, tipo:f.tipo } });
+    this.showToast('Movimiento registrado ✔');
+  };
+  deleteMovement(id){
+    const fin = this.state.fin.filter(m=>m.id!==id);
+    this.persistFin(fin); this.setState({fin});
+  }
+
+  money(n){ n = Number(n)||0; return '$' + n.toLocaleString('es-MX'); }
+  pct(d){ const m=Number(d.meta)||0; if(m<=0) return '0%'; return Math.min(100, Math.round((Number(d.recaudado)||0)/m*100)) + '%'; }
+  paras(s){ return String(s||'').split(/\n{2,}/).map(x=>x.trim()).filter(Boolean); }
+  excerpt(s){ const t = String(s||'').replace(/\n+/g,' ').trim(); return t.length>120 ? t.slice(0,120)+'…' : t; }
+
+  facts(d){
+    const F = [];
+    if(d.sexo) F.push({ label:d.sexo, color:'#EF9BB4' });
+    if(d.edad) F.push({ label:d.edad, color:'#F0A95C' });
+    if(d.tamano) F.push({ label:'Tamaño '+d.tamano.toLowerCase(), color:'#9FC26B' });
+    if(d.vacunado) F.push({ label:'Vacunado', color:'#7FA6D6' });
+    if(d.esterilizado) F.push({ label:'Esterilizado', color:'#B394D4' });
+    if(d.ubicacion) F.push({ label:d.ubicacion, color:'#16808A' });
+    return F;
+  }
+
+  makeFlip(href){
+    return (e) => {
+      e.preventDefault();
+      const card = e.currentTarget;
+      if(card._flipping) return;
+      card._flipping = true;
+      card.style.setProperty('transform-style','preserve-3d','important');
+      card.style.setProperty('box-shadow','0 26px 48px rgba(74,59,51,.28)','important');
+      card.style.setProperty('z-index','5','important');
+      card.style.setProperty('position','relative','important');
+      card.style.setProperty('transition','none','important');
+      card.style.setProperty('animation','cardFlip .62s cubic-bezier(.45,.05,.25,1)','important');
+      setTimeout(()=>{ location.hash = href; }, 560);
+    };
+  }
+
+  rimg(x){
+    if(!x) return x;
+    if(this._assetMap && this._assetMap[x]) return this._assetMap[x];
+    try {
+      const el = document.querySelector('img[data-asset="'+x+'"]');
+      if(el) return el.getAttribute('src');
+    } catch(e){}
+    return x;
+  }
+  buildAssetMap(){
+    try {
+      const map = {};
+      document.querySelectorAll('img[data-asset]').forEach(el=>{
+        map[el.getAttribute('data-asset')] = el.getAttribute('src');
+      });
+      this._assetMap = map;
+    } catch(e){}
+  }
+
+  decorate(d){
+    const st = this.STATUS[d.estado] || this.STATUS.adopcion;
+    const metaBits = [d.sexo, d.edad, d.tamano].filter(Boolean).join(' · ');
+    return { ...d, statusLabel:st.label, statusColor:st.color,
+      antes:this.rimg(d.antes), ahora:this.rimg(d.ahora), gallery:(d.gallery||[]).map(g=>this.rimg(g)),
+      href:'#/perrito/'+d.id, metaLine:metaBits, excerpt:this.excerpt(d.historia),
+      flipGo: this.makeFlip('#/perrito/'+d.id) };
+  }
+
+  toggleMenu = () => this.setState(s=>({menuOpen:!s.menuOpen}));
+  closeMenu = () => this.setState({menuOpen:false});
+
+  setForm(patch){ this.setState(s=>({ form:{...s.form, ...patch} })); }
+  readFile(file, cb){ const r=new FileReader(); r.onload=()=>cb(r.result); r.readAsDataURL(file); }
+
+  onLoginInput = e => this.setState({ loginValue:e.target.value, loginError:false });
+  onLoginKey = e => { if(e.key==='Enter') this.doLogin(); };
+  doLogin = () => {
+    const pass = this.props.adminPassword || 'huellitas';
+    if(this.state.loginValue === pass){ sessionStorage.setItem('huellitas_admin','1'); this.setState({admin:true, loginValue:'', loginError:false}); }
+    else this.setState({loginError:true});
+  };
+  doLogout = () => { sessionStorage.removeItem('huellitas_admin'); this.setState({admin:false}); };
+
+  showToast(msg){ this.setState({toast:msg}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:''}),2600); }
+
+  submitForm = () => {
+    const f = this.state.form;
+    if(!f.name.trim()){ this.showToast('Escribe el nombre del perrito'); return; }
+    const gallery = (f.gallery||[]).slice();
+    const dog = {
+      id: this.state.editingId || (f.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') + '-' + Date.now().toString(36).slice(-4)),
+      name:f.name.trim(), estado:f.estado, sexo:f.sexo, edad:f.edad.trim(), tamano:f.tamano,
+      ubicacion:f.ubicacion.trim(), vacunado:!!f.vacunado, esterilizado:!!f.esterilizado,
+      historia:f.historia, meta:Number(f.meta)||0, recaudado:Number(f.recaudado)||0,
+      antes: f.antes || this.ph('foto ANTES · '+f.name,'#e6d3cf'),
+      ahora: f.ahora || this.ph('foto AHORA · '+f.name,'#d9e3cf'),
+      gallery
+    };
+    let dogs;
+    if(this.state.editingId){ dogs = this.state.dogs.map(d=> d.id===this.state.editingId ? dog : d); }
+    else { dogs = [dog, ...this.state.dogs]; }
+    this.persist(dogs);
+    this.setState({ dogs, form:this.blankForm(), editingId:null });
+    this.showToast(this.state.editingId ? 'Perrito actualizado ✔' : '¡'+dog.name+' publicado! 🐾');
+    location.hash = '#/perrito/'+dog.id;
+  };
+  resetForm = () => this.setState({ form:this.blankForm(), editingId:null });
+
+  deleteDog(id){
+    if(!window.confirm('¿Borrar este perrito?')) return;
+    const dogs = this.state.dogs.filter(d=>d.id!==id);
+    this.persist(dogs); this.setState({dogs});
+    this.showToast('Perrito eliminado');
+  }
+  editDog(id){
+    const d = this.state.dogs.find(x=>x.id===id); if(!d) return;
+    this.setState({ editingId:id, form:{
+      name:d.name, estado:d.estado, sexo:d.sexo, edad:d.edad, tamano:d.tamano,
+      ubicacion:d.ubicacion, vacunado:d.vacunado, esterilizado:d.esterilizado,
+      historia:d.historia, meta:d.meta||'', recaudado:d.recaudado||'',
+      antes:d.antes, ahora:d.ahora, gallery:(d.gallery||[]).slice()
+    }});
+    try{ window.scrollTo(0,0);}catch(e){}
+  }
+
+  openDonate(id){ this.setState({ donateId:id, donateOpen:true, donateAmount:200 }); }
+  closeDonate = () => this.setState({ donateOpen:false });
+  openGeneralDonate = () => this.openDonate('__general__');
+  stop = e => { e.stopPropagation(); };
+
+  renderVals(){
+    const dogs = (this.state.dogs||[]).map(d=>this.decorate(d));
+    const route = this.state.route;
+    const filter = this.state.filter;
+
+    // gallery
+    const galleryDogs = filter==='todos' ? dogs : dogs.filter(d=>d.estado===filter);
+    const filterDefs = [['todos','Todos'],['adopcion','En adopción'],['tratamiento','En tratamiento'],['adoptado','Adoptados']];
+    const chip = active => 'font-weight:800; font-size:14px; padding:9px 18px; border-radius:999px; cursor:pointer; border:2px solid '+(active?'#16808A':'#e0d3bf')+'; background:'+(active?'#16808A':'#FFFDF8')+'; color:'+(active?'#fff':'#6f5f52')+';';
+    const filters = filterDefs.map(([k,label])=>({ label, style:chip(filter===k), select:()=>this.setState({filter:k}) }));
+
+    // detail
+    let currentDog = null, dogNotFound = false;
+    if(route==='detalle'){
+      const d = dogs.find(x=>x.id===this.state.routeId);
+      if(d){
+        const raw = this.state.dogs.find(x=>x.id===this.state.routeId);
+        currentDog = { ...d, paragraphs:this.paras(d.historia), facts:this.facts(raw),
+          pct:this.pct(raw), recaudadoFmt:this.money(raw.recaudado), metaFmt:this.money(raw.meta),
+          showDonate: (Number(raw.meta)||0) > 0 && raw.estado!=='adoptado',
+          hasGallery: (raw.gallery||[]).length>0, gallery: (raw.gallery||[]).map(g=>this.rimg(g)),
+          openDonate: ()=>this.openDonate(raw.id) };
+      } else dogNotFound = true;
+    }
+
+    // donaciones list
+    const donacionDogs = dogs.filter(d=>(Number(d.meta)||0)>0 && d.estado!=='adoptado').map(d=>{
+      const raw = this.state.dogs.find(x=>x.id===d.id);
+      return { ...d, pct:this.pct(raw), recaudadoFmt:this.money(raw.recaudado), metaFmt:this.money(raw.meta), openDonate:()=>this.openDonate(d.id) };
+    });
+
+    // admin dogs
+    const adminDogs = dogs.map(d=>({ ...d, edit:()=>this.editDog(d.id), del:()=>this.deleteDog(d.id) }));
+
+    // finanzas
+    const fin = this.state.fin || [];
+    const nameOf = id => id==='__general__' ? 'General / refugio' : ((dogs.find(d=>d.id===id)||{}).name || 'Perrito eliminado');
+    const totIn = fin.filter(m=>m.tipo==='ingreso').reduce((a,m)=>a+(Number(m.monto)||0),0);
+    const totOut = fin.filter(m=>m.tipo==='gasto').reduce((a,m)=>a+(Number(m.monto)||0),0);
+    const finSummary = [
+      { label:'Ingresos totales', value:this.money(totIn), color:'#6FA84E', bg:'#EEF6E7' },
+      { label:'Gastos totales', value:this.money(totOut), color:'#D98A57', bg:'#FBEEE2' },
+      { label:'Balance actual', value:this.money(totIn-totOut), color:(totIn-totOut)>=0?'#16808A':'#c9463f', bg:'#E4F2F1' }
+    ];
+    const finGroups = ['__general__'].concat(dogs.map(d=>d.id)).map(id=>{
+      const ms = fin.filter(m=>m.dogId===id);
+      const ing = ms.filter(m=>m.tipo==='ingreso').reduce((a,m)=>a+(Number(m.monto)||0),0);
+      const gas = ms.filter(m=>m.tipo==='gasto').reduce((a,m)=>a+(Number(m.monto)||0),0);
+      return { id, name:nameOf(id), ingFmt:this.money(ing), gasFmt:this.money(gas),
+        balFmt:this.money(ing-gas), balColor:(ing-gas)>=0?'#16808A':'#c9463f', count:ms.length };
+    }).filter(g=>g.count>0);
+    const finList = fin.slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')).map(m=>({
+      id:m.id, dogName:nameOf(m.dogId), concepto:m.concepto, fecha:m.fecha,
+      tipoLabel: m.tipo==='ingreso'?'Ingreso':'Gasto',
+      tipoColor: m.tipo==='ingreso'?'#6FA84E':'#D98A57',
+      tipoBg: m.tipo==='ingreso'?'#EEF6E7':'#FBEEE2',
+      amountFmt:(m.tipo==='ingreso'?'+':'−')+this.money(m.monto).slice(1),
+      del:()=>this.deleteMovement(m.id)
+    }));
+    const finDogOptions = [{ value:'__general__', label:'General / refugio' }].concat(dogs.map(d=>({ value:d.id, label:d.name })));
+
+    // nav
+    const navDefs = [['#/','Inicio'],['#/galeria','Perritos'],['#/adoptar','Cómo adoptar'],['#/donaciones','Donar'],['#/historias','Historias'],['#/contacto','Contacto']];
+    const navItems = navDefs.map(([href,label])=>({ href, label, style:'font-weight:800; font-size:15px; color:#5f5045; padding:8px 12px; border-radius:10px;' }));
+
+    // donate modal
+    const donateDog = this.state.donateId==='__general__' ? null : dogs.find(d=>d.id===this.state.donateId);
+    const donateTitle = this.state.donateId==='__general__' ? 'Donación general' : (donateDog? 'Donar a '+donateDog.name : 'Donar');
+    const amtBtn = active => 'font-weight:800; font-size:15px; padding:10px 18px; border-radius:12px; cursor:pointer; border:2px solid '+(active?'#16808A':'#e0d3bf')+'; background:'+(active?'#E4F2F1':'#FFFDF8')+'; color:'+(active?'#0F6068':'#6f5f52')+';';
+    const donateAmounts = [100,200,500,1000].map(v=>({ label:'$'+v, style:amtBtn(this.state.donateAmount===v), select:()=>this.setState({donateAmount:v}) }));
+    const donateMethods = [
+      { name:'Mercado Pago', desc:'Tarjeta, débito o efectivo', icon:'💳', color:'#7FA6D6', href:'#' },
+      { name:'PayPal', desc:'Pago internacional seguro', icon:'🅿️', color:'#16808A', href:'#' },
+      { name:'Transferencia / CLABE', desc:'Depósito directo a la cuenta', icon:'🏦', color:'#6FA84E', href:'#' }
+    ];
+
+    const wa = (this.props.whatsapp||'55 2659 1490').replace(/\D/g,'');
+    const ig = this.props.instagram || 'huellitas_arcoiris';
+
+    return {
+      navItems,
+      navStyle: 'display:flex; gap:2px; align-items:center; flex-wrap:wrap;',
+      menuOpenAttr: this.state.menuOpen ? '1' : '0',
+      logoSrc: this.rimg('logo'),
+      igQr: this.rimg('igqr'),
+      toggleMenu:this.toggleMenu, closeMenu:this.closeMenu,
+
+      isHome: route==='home', isGaleria: route==='galeria', isDetalle: route==='detalle',
+      isQuienes: route==='quienes', isAdoptar: route==='adoptar', isDonaciones: route==='donaciones',
+      isHistorias: route==='historias', isContacto: route==='contacto', isAdmin: route==='admin',
+
+      featuredDogs: dogs.filter(d=>d.estado==='adopcion').slice(0,3),
+      galleryDogs, filters,
+      hasGalleryDogs: galleryDogs.length>0, noGalleryDogs: galleryDogs.length===0,
+      currentDog, dogNotFound,
+      donacionDogs,
+      historiasDogs: dogs.filter(d=>d.estado==='adoptado'),
+      hasHistorias: dogs.some(d=>d.estado==='adoptado'), noHistorias: !dogs.some(d=>d.estado==='adoptado'),
+
+      stats: [
+        { num:dogs.length+'', label:'perritos rescatados', color:'#16808A' },
+        { num:dogs.filter(d=>d.estado==='adoptado').length+'', label:'con familia nueva', color:'#6FA84E' },
+        { num:'100%', label:'vacunados y esterilizados', color:'#EF9BB4' },
+        { num:'0', label:'ánimo de lucro', color:'#B394D4' }
+      ],
+      rescueSteps: [
+        { icon:'🩺', label:'Los llevamos al veterinario', color:'#f4c9cf' },
+        { icon:'🐛', label:'Los desparasitamos', color:'#f5d7ad' },
+        { icon:'💉', label:'Los esterilizamos', color:'#d3e5b6' },
+        { icon:'💊', label:'Tratamiento médico si lo necesitan', color:'#c3d7ef' },
+        { icon:'🐾', label:'Si es necesario, reciben entrenamiento', color:'#dcccee' }
+      ],
+      adoptSteps: [
+        { n:'1', title:'Elige a tu perrito', text:'Explora la galería y conoce la historia de cada uno para encontrar tu match ideal.', color:'#16808A' },
+        { n:'2', title:'Escríbenos', text:'Contáctanos por WhatsApp o Instagram. Platicaremos sobre tu hogar y tu estilo de vida.', color:'#F0A95C' },
+        { n:'3', title:'Entrevista y visita', text:'Hacemos una breve entrevista y coordinamos que conozcas al perrito en persona.', color:'#EF9BB4' },
+        { n:'4', title:'Adopción responsable', text:'Firmamos carta compromiso y damos seguimiento para asegurar que todo vaya de maravilla.', color:'#6FA84E' }
+      ],
+
+      // donate modal
+      donateOpen:this.state.donateOpen, donateTitle, donateAmounts, donateMethods,
+      closeDonate:this.closeDonate, stop:this.stop, openGeneralDonate:this.openGeneralDonate,
+
+      // admin
+      adminLocked: !this.state.admin, adminUnlocked: this.state.admin,
+      loginValue:this.state.loginValue, loginError:this.state.loginError,
+      onLoginInput:this.onLoginInput, onLoginKey:this.onLoginKey, doLogin:this.doLogin, doLogout:this.doLogout,
+      adminPassword: this.props.adminPassword || 'huellitas',
+      adminDogs, dogCount:dogs.length,
+      form:this.state.form,
+      formTitle: this.state.editingId ? 'Editar perrito' : 'Publicar perrito nuevo',
+      submitLabel: this.state.editingId ? 'Guardar cambios' : 'Publicar perrito 🐾',
+      antesLabel: this.state.form.antes ? 'Cambiar foto' : 'Subir foto del rescate',
+      ahoraLabel: this.state.form.ahora ? 'Cambiar foto' : 'Subir foto actual',
+      galleryLabel: (this.state.form.gallery&&this.state.form.gallery.length) ? (this.state.form.gallery.length+' foto(s) seleccionadas') : 'Subir varias fotos',
+      onFieldName: e=>this.setForm({name:e.target.value}),
+      onFieldEstado: e=>this.setForm({estado:e.target.value}),
+      onFieldSexo: e=>this.setForm({sexo:e.target.value}),
+      onFieldEdad: e=>this.setForm({edad:e.target.value}),
+      onFieldTamano: e=>this.setForm({tamano:e.target.value}),
+      onFieldUbicacion: e=>this.setForm({ubicacion:e.target.value}),
+      onFieldVacunado: e=>this.setForm({vacunado:e.target.checked}),
+      onFieldEsterilizado: e=>this.setForm({esterilizado:e.target.checked}),
+      onFieldHistoria: e=>this.setForm({historia:e.target.value}),
+      onFieldMeta: e=>this.setForm({meta:e.target.value}),
+      onFieldRecaudado: e=>this.setForm({recaudado:e.target.value}),
+      onFileAntes: e=>{ const f=e.target.files[0]; if(f) this.readFile(f, d=>this.setForm({antes:d})); },
+      onFileAhora: e=>{ const f=e.target.files[0]; if(f) this.readFile(f, d=>this.setForm({ahora:d})); },
+      onFileGallery: e=>{ const fs=Array.from(e.target.files||[]); Promise.all(fs.map(f=>new Promise(res=>{const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f);}))).then(arr=>this.setForm({gallery:arr})); },
+      submitForm:this.submitForm, resetForm:this.resetForm,
+
+      // finanzas
+      finSummary, finGroups, finList, finDogOptions,
+      hasFin: finList.length>0, noFin: finList.length===0, finCount: finList.length,
+      finForm: this.state.finForm,
+      onFinDog: e=>this.setFinForm({dogId:e.target.value}),
+      onFinTipo: e=>this.setFinForm({tipo:e.target.value}),
+      onFinConcepto: e=>this.setFinForm({concepto:e.target.value}),
+      onFinMonto: e=>this.setFinForm({monto:e.target.value}),
+      onFinFecha: e=>this.setFinForm({fecha:e.target.value}),
+      addMovement: this.addMovement,
+
+      whatsapp: this.props.whatsapp || '55 2659 1490',
+      instagram: ig,
+      waLink: 'https://wa.me/52'+wa,
+      igLink: 'https://instagram.com/'+ig,
+
+      toast:this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
