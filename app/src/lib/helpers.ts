@@ -2,10 +2,11 @@
 
 import type { Dog, Estado } from "./types";
 
+// Status badge colors - standardized across the app
 export const STATUS: Record<Estado, { label: string; color: string }> = {
-  adopcion: { label: "En adopción", color: "#16808A" },
-  tratamiento: { label: "En tratamiento", color: "#E39A4E" },
-  adoptado: { label: "Adoptado ♥", color: "#6FA84E" },
+  adopcion: { label: "En adopción", color: "#16808A" }, // Teal
+  tratamiento: { label: "En tratamiento", color: "#F0A95C" }, // Orange
+  adoptado: { label: "Adoptado ♥", color: "#6FA84E" }, // Green
 };
 
 export function money(n: number): string {

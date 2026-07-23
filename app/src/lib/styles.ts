@@ -79,6 +79,7 @@ export const components = {
     color: "inherit",
     textDecoration: "none",
     cursor: "pointer",
+    minHeight: "44px",
   } as CSSProperties,
 
   cardHover: {
@@ -142,6 +143,7 @@ export const cardStyles = {
     position: "relative" as const,
     aspectRatio: "1 / 1",
     overflow: "hidden" as const,
+    minHeight: "44px",
   } as CSSProperties,
 
   body: {

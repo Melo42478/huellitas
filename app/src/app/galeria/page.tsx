@@ -1,7 +1,6 @@
 import { getDogs } from "@/lib/dogs";
-import DogCard from "@/components/dogs/DogCard";
 import FilterPills from "@/components/gallery/FilterPills";
-import EmptyState from "@/components/ui/EmptyState";
+import GaleriaClient from "@/components/gallery/GaleriaClient";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -27,15 +26,7 @@ export default async function GaleriaPage({ searchParams }: PageProps) {
         <FilterPills />
       </div>
 
-      {dogs.length > 0 ? (
-        <div className="grid grid-cols-1 md2:grid-cols-2 lg:grid-cols-3 gap-5 md2:gap-6">
-          {dogs.map((dog) => (
-            <DogCard key={dog.id} dog={dog} />
-          ))}
-        </div>
-      ) : (
-        <EmptyState icon="🐾" message="No hay perritos en esta categoría por ahora." />
-      )}
+      <GaleriaClient dogs={dogs} />
     </section>
   );
 }

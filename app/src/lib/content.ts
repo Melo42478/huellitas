@@ -1,10 +1,10 @@
 // Static content shared across multiple pages (Home, Quiénes somos, Cómo adoptar, Donaciones)
 
 export const RESCUE_STEPS = [
-  { icon: "🩺", label: "Los llevamos al veterinario", color: "#f4c9cf" },
-  { icon: "🐛", label: "Los desparasitamos", color: "#f5d7ad" },
-  { icon: "💉", label: "Los esterilizamos", color: "#d3e5b6" },
-  { icon: "💊", label: "Tratamiento médico si lo necesitan", color: "#c3d7ef" },
+  { icon: "🐾", label: "Los llevamos al veterinario", color: "#f4c9cf" },
+  { icon: "🐾", label: "Los desparasitamos", color: "#f5d7ad" },
+  { icon: "🐾", label: "Los esterilizamos", color: "#d3e5b6" },
+  { icon: "🐾", label: "Tratamiento médico si lo necesitan", color: "#c3d7ef" },
   { icon: "🐾", label: "Si es necesario, reciben entrenamiento", color: "#dcccee" },
 ];
 
