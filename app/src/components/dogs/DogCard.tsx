@@ -23,6 +23,7 @@ export default function DogCard({ dog }: { dog: Dog }) {
             src={imageUrl}
             alt={dog.name}
             fill
+            loading="lazy"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" } as CSSProperties}
           />
         ) : (

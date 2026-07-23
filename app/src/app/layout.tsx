@@ -3,7 +3,7 @@ import { Baloo_2, Nunito } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { DonateModalProvider } from "@/components/donate/DonateModalContext";
-import DonateModal from "@/components/donate/DonateModal";
+import DonateModalLazy from "@/components/donate/DonateModalLazy";
 import "./globals.css";
 
 const baloo = Baloo_2({
@@ -51,7 +51,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
-          <DonateModal />
+          <DonateModalLazy />
         </DonateModalProvider>
       </body>
     </html>

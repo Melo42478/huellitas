@@ -58,6 +58,7 @@ export default function DonacionesClient({
                       alt={dog.name}
                       width={82}
                       height={82}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                   ) : (

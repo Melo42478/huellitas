@@ -9,7 +9,7 @@ export default function DogGallery({ images, name }: { images: string[]; name: s
       <div className="grid grid-cols-2 md2:grid-cols-4 gap-3">
         {images.map((url) => (
           <div key={url} className="relative rounded-row overflow-hidden border border-border" style={{ aspectRatio: "1" }}>
-            <Image src={url} alt={`Foto de ${name}`} fill className="object-cover" />
+            <Image src={url} alt={`Foto de ${name}`} fill loading="lazy" className="object-cover" />
           </div>
         ))}
       </div>
