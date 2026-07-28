@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AdminLogin from "../../components/admin/AdminLogin";
-import AdminDashboard from "../../components/admin/AdminDashboard";
-import { createClient } from "../../lib/supabase/browser";
-import type { Dog } from "../../lib/types";
+import AdminLogin from "@/components/admin/AdminLogin";
+import AdminDashboard from "@/components/admin/AdminDashboard";
+import { createClient } from "@/lib/supabase/browser";
+import type { Dog } from "@/lib/types";
 
 export default function Page() {
   const [user, setUser] = useState<any>(null);
