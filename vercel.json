@@ -1,8 +1,5 @@
 {
-  "buildCommand": "cd app && npm run build",
-  "outputDirectory": "app/.next",
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_key"
-  }
+  "rootDirectory": "app",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next"
 }
