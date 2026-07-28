@@ -8,7 +8,7 @@ export async function getDogs(filter?: string) {
 
   const query = supabase
     .from("dogs")
-    .select("id, name, edad, estado, tamano, vacunado, esterilizado, historia, ahora, recaudado, meta, created_at")
+    .select("*")
     .order("created_at", { ascending: false });
 
   const filteredQuery = filter && filter !== "todos" ? query.eq("estado", filter) : query;

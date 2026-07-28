@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/browser";
 import type { Dog } from "@/lib/types";
+import ImageEditor from "./ImageEditor";
 
 interface DogFormProps {
   onDogAdded: (dog: Dog) => void;
@@ -16,21 +17,30 @@ export default function DogForm({ onDogAdded }: DogFormProps) {
     edad: "",
     tamano: "Mediano",
     ubicacion: "Querétaro",
+    whatsapp: "",
     vacunado: false,
     esterilizado: false,
     historia: "",
-    meta: "500",
-    recaudado: "0",
+  });
+
+  const [formImages, setFormImages] = useState({
+    antes: "" as string,
+    ahora: "" as string,
+    portada: "" as string,
   });
 
   const [files, setFiles] = useState({
     antes: null as File | null,
     ahora: null as File | null,
+    portada: null as File | null,
+    gallery: [] as File[],
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [editingImageType, setEditingImageType] = useState<"antes" | "ahora" | "portada" | null>(null);
+  const [imageEditorUrl, setImageEditorUrl] = useState("");
 
   const uploadFile = async (file: File, folder: string): Promise<string> => {
     const supabase = createClient();
@@ -50,6 +60,44 @@ export default function DogForm({ onDogAdded }: DogFormProps) {
     return publicUrl;
   };
 
+  const canvasToFile = async (canvas: HTMLCanvasElement, filename: string): Promise<File> => {
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        const file = new File([blob!], filename, { type: "image/jpeg" });
+        resolve(file);
+      }, "image/jpeg", 0.95);
+    });
+  };
+
+  const handleFileSelect = (selectedFile: File | undefined, type: "antes" | "ahora" | "portada") => {
+    if (!selectedFile) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImageEditorUrl(e.target?.result as string);
+      setEditingImageType(type);
+    };
+    reader.readAsDataURL(selectedFile);
+  };
+
+  const handleImageSave = async (canvas: HTMLCanvasElement) => {
+    const file = await canvasToFile(canvas, "edited.jpg");
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
+
+    if (editingImageType === "antes") {
+      setFiles({ ...files, antes: file });
+      setFormImages({ ...formImages, antes: dataUrl });
+    } else if (editingImageType === "ahora") {
+      setFiles({ ...files, ahora: file });
+      setFormImages({ ...formImages, ahora: dataUrl });
+    } else if (editingImageType === "portada") {
+      setFiles({ ...files, portada: file });
+      setFormImages({ ...formImages, portada: dataUrl });
+    }
+
+    setEditingImageType(null);
+    setImageEditorUrl("");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -64,12 +112,21 @@ export default function DogForm({ onDogAdded }: DogFormProps) {
       const supabase = createClient();
       let beforeUrl = "";
       let afterUrl = "";
+      let portadaUrl = "";
+      const galleryUrls: string[] = [];
 
       if (files.antes) {
         beforeUrl = await uploadFile(files.antes, "before");
       }
       if (files.ahora) {
         afterUrl = await uploadFile(files.ahora, "after");
+      }
+      if (files.portada) {
+        portadaUrl = await uploadFile(files.portada, "portada");
+      }
+      for (const file of files.gallery) {
+        const url = await uploadFile(file, "gallery");
+        galleryUrls.push(url);
       }
 
       const dogId = form.name.toLowerCase().replace(/\s+/g, "-");
@@ -85,13 +142,14 @@ export default function DogForm({ onDogAdded }: DogFormProps) {
             edad: form.edad,
             tamano: form.tamano,
             ubicacion: form.ubicacion,
+            whatsapp: form.whatsapp || null,
             vacunado: form.vacunado,
             esterilizado: form.esterilizado,
             historia: form.historia,
-            meta: parseFloat(form.meta),
-            recaudado: parseFloat(form.recaudado),
             antes: beforeUrl || null,
             ahora: afterUrl || null,
+            portada: portadaUrl || afterUrl || beforeUrl || (galleryUrls.length > 0 ? galleryUrls[0] : null),
+            gallery: galleryUrls,
           },
         ])
         .select()
@@ -107,13 +165,13 @@ export default function DogForm({ onDogAdded }: DogFormProps) {
         edad: "",
         tamano: "Mediano",
         ubicacion: "Querétaro",
+        whatsapp: "",
         vacunado: false,
         esterilizado: false,
         historia: "",
-        meta: "500",
-        recaudado: "0",
       });
-      setFiles({ antes: null, ahora: null });
+      setFormImages({ antes: "", ahora: "", portada: "" });
+      setFiles({ antes: null, ahora: null, portada: null, gallery: [] });
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
@@ -221,30 +279,16 @@ export default function DogForm({ onDogAdded }: DogFormProps) {
             />
           </div>
 
-          {/* Meta */}
+          {/* WhatsApp */}
           <div>
             <label className="block font-bold text-sm text-text mb-1.5">
-              Meta de donación ($)
+              WhatsApp
             </label>
             <input
-              type="number"
-              value={form.meta}
-              onChange={(e) => setForm({ ...form, meta: e.target.value })}
-              placeholder="500"
-              className="w-full border border-border rounded-row px-3.5 py-2.5 focus:outline-none focus:border-teal"
-            />
-          </div>
-
-          {/* Recaudado */}
-          <div>
-            <label className="block font-bold text-sm text-text mb-1.5">
-              Recaudado ($)
-            </label>
-            <input
-              type="number"
-              value={form.recaudado}
-              onChange={(e) => setForm({ ...form, recaudado: e.target.value })}
-              placeholder="0"
+              type="text"
+              value={form.whatsapp}
+              onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
+              placeholder="5526591490"
               className="w-full border border-border rounded-row px-3.5 py-2.5 focus:outline-none focus:border-teal"
             />
           </div>
@@ -290,45 +334,106 @@ export default function DogForm({ onDogAdded }: DogFormProps) {
           />
         </div>
 
-        {/* File uploads */}
-        <div className="grid grid-cols-1 md2:grid-cols-2 gap-5">
+        {/* Image uploads with editor */}
+        <div className="grid grid-cols-1 md2:grid-cols-3 gap-5">
+          {/* Foto Antes */}
           <div>
-            <label className="block font-bold text-sm text-text mb-1.5">
-              Foto Antes
-            </label>
+            <label className="block font-bold text-sm text-text mb-2">Foto Antes</label>
+            <div className="relative w-full aspect-square bg-black/5 rounded-row border-2 border-dashed border-border group mb-2">
+              {formImages.antes ? (
+                <>
+                  <img src={formImages.antes} alt="antes" className="w-full h-full object-contain p-2" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity rounded-row pointer-events-none group-hover:pointer-events-auto">
+                    <button type="button" onClick={() => { setFormImages({ ...formImages, antes: "" }); setFiles({ ...files, antes: null }); }} className="px-2 py-1 text-xs bg-red-500 text-white rounded-pill cursor-pointer hover:bg-red-600">✕</button>
+                  </div>
+                </>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-text-muted text-xs">Sin foto</div>
+              )}
+            </div>
             <input
               type="file"
               accept="image/*"
-              onChange={(e) =>
-                setFiles({ ...files, antes: e.target.files?.[0] || null })
-              }
-              className="w-full border border-border rounded-row px-3.5 py-2.5 text-sm"
+              onChange={(e) => handleFileSelect(e.target.files?.[0], "antes")}
+              className="w-full border border-border rounded-row px-2.5 py-1.5 text-xs"
             />
-            {files.antes && (
-              <p className="text-xs text-text-muted mt-1">
-                {files.antes.name}
-              </p>
-            )}
           </div>
 
+          {/* Foto Ahora */}
           <div>
-            <label className="block font-bold text-sm text-text mb-1.5">
-              Foto Ahora
-            </label>
+            <label className="block font-bold text-sm text-text mb-2">Foto Ahora</label>
+            <div className="relative w-full aspect-square bg-black/5 rounded-row border-2 border-dashed border-border group mb-2">
+              {formImages.ahora ? (
+                <>
+                  <img src={formImages.ahora} alt="ahora" className="w-full h-full object-contain p-2" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity rounded-row pointer-events-none group-hover:pointer-events-auto">
+                    <button type="button" onClick={() => { setFormImages({ ...formImages, ahora: "" }); setFiles({ ...files, ahora: null }); }} className="px-2 py-1 text-xs bg-red-500 text-white rounded-pill cursor-pointer hover:bg-red-600">✕</button>
+                  </div>
+                </>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-text-muted text-xs">Sin foto</div>
+              )}
+            </div>
             <input
               type="file"
               accept="image/*"
-              onChange={(e) =>
-                setFiles({ ...files, ahora: e.target.files?.[0] || null })
-              }
-              className="w-full border border-border rounded-row px-3.5 py-2.5 text-sm"
+              onChange={(e) => handleFileSelect(e.target.files?.[0], "ahora")}
+              className="w-full border border-border rounded-row px-2.5 py-1.5 text-xs"
             />
-            {files.ahora && (
-              <p className="text-xs text-text-muted mt-1">
-                {files.ahora.name}
-              </p>
-            )}
           </div>
+
+          {/* Foto Portada */}
+          <div>
+            <label className="block font-bold text-sm text-text mb-2">Foto Portada</label>
+            <div className="relative w-full aspect-square bg-black/5 rounded-row border-2 border-dashed border-teal group mb-2">
+              {formImages.portada ? (
+                <>
+                  <img src={formImages.portada} alt="portada" className="w-full h-full object-contain p-2" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity rounded-row pointer-events-none group-hover:pointer-events-auto">
+                    <button type="button" onClick={() => { setFormImages({ ...formImages, portada: "" }); setFiles({ ...files, portada: null }); }} className="px-2 py-1 text-xs bg-red-500 text-white rounded-pill cursor-pointer hover:bg-red-600">✕</button>
+                  </div>
+                </>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-text-muted text-xs text-center px-2">Subir portada</div>
+              )}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleFileSelect(e.target.files?.[0], "portada")}
+              className="w-full border border-border rounded-row px-2.5 py-1.5 text-xs"
+            />
+          </div>
+        </div>
+
+        {/* Galería */}
+        <div>
+          <label className="block font-bold text-sm text-text mb-1.5">
+            Fotos de galería (múltiples)
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) =>
+              setFiles({ ...files, gallery: Array.from(e.target.files || []) })
+            }
+            className="w-full border border-border rounded-row px-3.5 py-2.5 text-sm"
+          />
+          {files.gallery.length > 0 && (
+            <div className="mt-2">
+              <p className="text-xs text-text-muted mb-2">
+                {files.gallery.length} foto(s) seleccionada(s):
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {files.gallery.map((file, idx) => (
+                  <div key={idx} className="text-xs bg-teal-soft text-teal-dark px-2.5 py-1.5 rounded-pill">
+                    {file.name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {error && (
@@ -351,6 +456,18 @@ export default function DogForm({ onDogAdded }: DogFormProps) {
           {loading ? "Publicando..." : "Publicar perrito"}
         </button>
       </form>
+
+      {/* Image editor modal */}
+      {editingImageType !== null && imageEditorUrl && (
+        <ImageEditor
+          imageUrl={imageEditorUrl}
+          onSave={handleImageSave}
+          onCancel={() => {
+            setEditingImageType(null);
+            setImageEditorUrl("");
+          }}
+        />
+      )}
     </div>
   );
 }

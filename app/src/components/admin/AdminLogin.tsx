@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/browser";
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +45,7 @@ export default function AdminLogin() {
           Panel de administrador
         </h1>
         <p className="text-text-muted text-sm mb-6">
-          Inicia sesión para gestionar los perritos y donaciones.
+          Inicia sesión para gestionar los perritos.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -66,14 +67,23 @@ export default function AdminLogin() {
             <label className="block font-bold text-sm text-text mb-1.5">
               Contraseña
             </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full border border-border rounded-row px-3.5 py-2.5 text-base focus:outline-none focus:border-teal"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full border border-border rounded-row px-3.5 py-2.5 text-base focus:outline-none focus:border-teal"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text cursor-pointer"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
 
           {error && (

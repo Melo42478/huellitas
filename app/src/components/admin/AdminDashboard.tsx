@@ -1,25 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import { createClient } from "@/lib/supabase/browser";
 import DogForm from "./DogForm";
 import DogList from "./DogList";
-import FinancePanel from "./FinancePanel";
+import { useState } from "react";
 import type { Dog } from "@/lib/types";
-import type { Movimiento } from "@/lib/types";
 
 interface AdminDashboardProps {
   initialDogs: Dog[];
-  initialMovimientos: Movimiento[];
 }
 
 export default function AdminDashboard({
   initialDogs,
-  initialMovimientos,
 }: AdminDashboardProps) {
   const [dogs, setDogs] = useState(initialDogs);
-  const [movimientos, setMovimientos] = useState(initialMovimientos);
-  const [tab, setTab] = useState<"dogs" | "finance">("dogs");
 
   const handleLogout = async () => {
     const supabase = createClient();
@@ -44,63 +38,20 @@ export default function AdminDashboard({
         </div>
       </div>
 
-      {/* Navigation tabs */}
-      <div className="max-w-full px-5 py-4 border-b border-border bg-white">
-        <div className="flex gap-6">
-          <button
-            onClick={() => setTab("dogs")}
-            className={`font-bold text-sm pb-2 border-b-2 transition-colors cursor-pointer ${
-              tab === "dogs"
-                ? "border-teal text-teal"
-                : "border-transparent text-text-muted hover:text-text"
-            }`}
-          >
-            Perritos
-          </button>
-          <button
-            onClick={() => setTab("finance")}
-            className={`font-bold text-sm pb-2 border-b-2 transition-colors cursor-pointer ${
-              tab === "finance"
-                ? "border-teal text-teal"
-                : "border-transparent text-text-muted hover:text-text"
-            }`}
-          >
-            Finanzas
-          </button>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="max-w-full px-5 py-8">
-        {tab === "dogs" && (
-          <div className="space-y-8">
-            <DogForm onDogAdded={(newDog) => setDogs([...dogs, newDog])} />
-            <DogList
-              dogs={dogs}
-              onDogDeleted={(deletedId) =>
-                setDogs(dogs.filter((d) => d.id !== deletedId))
-              }
-              onDogUpdated={(updated) =>
-                setDogs(dogs.map((d) => (d.id === updated.id ? updated : d)))
-              }
-            />
-          </div>
-        )}
-
-        {tab === "finance" && (
-          <FinancePanel
+        <div className="space-y-8">
+          <DogForm onDogAdded={(newDog) => setDogs([...dogs, newDog])} />
+          <DogList
             dogs={dogs}
-            movimientos={movimientos}
-            onMovimientoAdded={(newMov) =>
-              setMovimientos([...movimientos, newMov])
+            onDogDeleted={(deletedId) =>
+              setDogs(dogs.filter((d) => d.id !== deletedId))
             }
-            onMovimientoDeleted={(deletedId) =>
-              setMovimientos(
-                movimientos.filter((m) => m.id !== deletedId)
-              )
+            onDogUpdated={(updated) =>
+              setDogs(dogs.map((d) => (d.id === updated.id ? updated : d)))
             }
           />
-        )}
+        </div>
       </div>
     </div>
   );

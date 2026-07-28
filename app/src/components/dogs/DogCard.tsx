@@ -9,7 +9,7 @@ import StatusBadge from "./StatusBadge";
 import DogPlaceholder from "./DogPlaceholder";
 
 export default function DogCard({ dog }: { dog: Dog }) {
-  const imageUrl = dog.ahora || getImageUrl(dog.id);
+  const imageUrl = dog.portada || dog.ahora;
 
   return (
     <Link

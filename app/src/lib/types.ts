@@ -18,6 +18,8 @@ export interface Dog {
   antes: string | null;
   ahora: string | null;
   gallery: string[];
+  portada: string | null;
+  whatsapp: string | null;
   created_at: string;
   updated_at: string;
 }

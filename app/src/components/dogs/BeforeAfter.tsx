@@ -10,7 +10,7 @@ export default function BeforeAfter({
   return (
     <div className="grid grid-cols-1 md2:grid-cols-2 gap-3.5 mb-7">
       {/* ANTES */}
-      <div className="relative rounded-card overflow-hidden border-4 border-teal aspect-video">
+      <div className="relative rounded-card overflow-hidden border-4 border-teal bg-black/5" style={{ aspectRatio: "3/4" }}>
         {antes && (
           <>
             <Image
@@ -36,7 +36,7 @@ export default function BeforeAfter({
       </div>
 
       {/* AHORA */}
-      <div className="relative rounded-card overflow-hidden border-4 border-green aspect-video">
+      <div className="relative rounded-card overflow-hidden border-4 border-green bg-black/5" style={{ aspectRatio: "3/4" }}>
         {ahora && (
           <Image
             src={ahora}

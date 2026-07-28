@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useDonateModal } from "./DonateModalContext";
-import { DONATE_AMOUNTS, DONATE_METHODS } from "@/lib/content";
+import { BANK_ACCOUNTS, AMAZON_WISHLIST_URL } from "@/lib/content";
 
 interface DonateModalProps {
   dogName?: string;
@@ -38,54 +37,64 @@ export default function DonateModal({ dogName }: DonateModalProps) {
 
         {/* Description */}
         <p className="text-text-secondary2 text-sm mb-4.5">
-          Elige un monto y tu método preferido. Te llevaremos al pago seguro.
+          Elige tu método preferido de transferencia o compra un producto en Amazon.
         </p>
-
-        {/* Amount buttons */}
-        <div className="flex flex-wrap gap-2.5 mb-5">
-          {DONATE_AMOUNTS.map((amt) => (
-            <button
-              key={amt}
-              onClick={() => setAmount(amt)}
-              className={`font-display font-extrabold text-sm px-4.5 py-2.5 rounded-lg transition-colors border-2 ${
-                amount === amt
-                  ? "bg-teal-soft text-teal-dark border-teal"
-                  : "bg-surface text-text-secondary2 border-border hover:border-teal"
-              }`}
-            >
-              ${amt}
-            </button>
-          ))}
-        </div>
 
         {/* Payment methods */}
         <div className="flex flex-col gap-3">
-          {DONATE_METHODS.map((method) => (
-            <a
-              key={method.name}
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3.5 bg-surface border-2 border-border hover:border-teal rounded-row p-3.5 transition-colors"
-            >
-              <span
-                className="w-11 h-11 rounded-row flex items-center justify-center text-white font-display font-extrabold text-lg flex-shrink-0"
-                style={{ backgroundColor: method.color }}
-              >
-                {method.icon}
-              </span>
-              <div className="flex-1 min-w-0">
-                <div className="font-display font-extrabold text-text text-sm">{method.name}</div>
-                <div className="text-text-muted text-xs">{method.desc}</div>
+          {/* Bank Transfers */}
+          {BANK_ACCOUNTS.map((account) => (
+            <div key={account.valor} className="flex flex-col bg-surface border-2 border-border rounded-row p-3.5">
+              <div className="flex items-center gap-3.5 mb-3">
+                <span className="w-11 h-11 rounded-row flex items-center justify-center text-white font-display font-extrabold text-lg flex-shrink-0" style={{ backgroundColor: "#6FA84E" }}>
+                  🏦
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="font-display font-extrabold text-text text-sm">{account.titular}</div>
+                  <div className="text-text-muted text-xs">{account.banco}</div>
+                </div>
               </div>
-              <span className="text-teal font-display font-extrabold text-sm flex-shrink-0">→</span>
-            </a>
+
+              <div className="bg-bg rounded-row p-3 space-y-2.5 mb-3">
+                <div>
+                  <div className="text-xs text-text-muted mb-0.5">{account.tipo}</div>
+                  <div className="font-mono text-sm text-text font-bold break-all">{account.valor}</div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(account.valor);
+                  alert(`${account.tipo} copiada al portapapeles`);
+                }}
+                className="w-full bg-teal text-white font-display font-extrabold text-sm px-3 py-2 rounded-pill hover:bg-teal-dark transition-colors cursor-pointer"
+              >
+                Copiar {account.tipo}
+              </button>
+            </div>
           ))}
+
+          {/* Amazon Wishlist */}
+          <a
+            href={AMAZON_WISHLIST_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3.5 bg-surface border-2 border-border hover:border-teal rounded-row p-3.5 transition-colors cursor-pointer"
+          >
+            <span className="w-11 h-11 rounded-row flex items-center justify-center text-white font-display font-extrabold text-lg flex-shrink-0" style={{ backgroundColor: "#FF9900" }}>
+              🎁
+            </span>
+            <div className="flex-1 min-w-0">
+              <div className="font-display font-extrabold text-text text-sm">Dona un producto</div>
+              <div className="text-text-muted text-xs">Compra de nuestra lista en Amazon</div>
+            </div>
+            <span className="text-teal font-display font-extrabold text-sm flex-shrink-0">→</span>
+          </a>
         </div>
 
         {/* Note */}
         <p className="text-text-muted text-xs text-center mt-4.5">
-          Los enlaces de pago se conectan al activar tu cuenta (Mercado Pago, PayPal o Stripe).
+          Al transferir, escríbenos por WhatsApp para confirmar tu donativo.
         </p>
       </div>
     </div>

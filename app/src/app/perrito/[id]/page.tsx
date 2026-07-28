@@ -63,7 +63,7 @@ export default async function PerritoPage({ params }: PageProps) {
           <h2 className="font-display font-bold text-xl text-text mt-6 md2:mt-8 mb-3.5">
             Su historia
           </h2>
-          <div className="space-y-3.5">
+          <div className="space-y-3.5 mb-8 md2:mb-10">
             {paragraphs.map((para) => (
               <p key={para} className="flex gap-3 text-text-secondary2 text-base leading-relaxed">
                 <span className="text-teal flex-shrink-0">🐾</span>
@@ -71,6 +71,9 @@ export default async function PerritoPage({ params }: PageProps) {
               </p>
             ))}
           </div>
+
+          {/* Gallery */}
+          {gallery.length > 0 && <DogGallery images={gallery} name={dog.name} />}
         </div>
 
         {/* Right: aside */}
@@ -78,7 +81,7 @@ export default async function PerritoPage({ params }: PageProps) {
           <DogFacts dog={dog} />
           {canDonate && <SponsorshipCard dog={dog} />}
           <a
-            href={whatsappAdoptLink(dog.name)}
+            href={whatsappAdoptLink(dog.name, dog.whatsapp)}
             target="_blank"
             rel="noopener noreferrer"
             className="text-center bg-green text-white font-display font-extrabold py-3.5 rounded-pill hover:opacity-90 transition-opacity"
@@ -87,9 +90,6 @@ export default async function PerritoPage({ params }: PageProps) {
           </a>
         </aside>
       </div>
-
-      {/* Gallery */}
-      {gallery.length > 0 && <DogGallery images={gallery} name={dog.name} />}
     </section>
   );
 }
