@@ -15,15 +15,10 @@ export default async function Page() {
   }
 
   const dogs = await getDogs();
-  const { data: movimientos } = await supabase
-    .from("movimientos")
-    .select("*")
-    .order("fecha", { ascending: false });
 
   return (
     <AdminDashboard
       initialDogs={dogs}
-      initialMovimientos={movimientos || []}
     />
   );
 }

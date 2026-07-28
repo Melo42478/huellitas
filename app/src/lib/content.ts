@@ -37,8 +37,19 @@ export const ADOPT_STEPS = [
 
 export const DONATE_AMOUNTS = [100, 200, 500, 1000];
 
-export const DONATE_METHODS = [
-  { name: "Mercado Pago", desc: "Tarjeta, débito o efectivo", icon: "💳", color: "#7FA6D6" },
-  { name: "PayPal", desc: "Pago internacional seguro", icon: "🅿️", color: "#16808A" },
-  { name: "Transferencia / CLABE", desc: "Depósito directo a la cuenta", icon: "🏦", color: "#6FA84E" },
+export const BANK_ACCOUNTS = [
+  {
+    banco: "Santander",
+    titular: "Esmeralda Guerrero",
+    tipo: "CLABE",
+    valor: "014680605707418748",
+  },
+  {
+    banco: "Santander",
+    titular: "Analia Susugar",
+    tipo: "Tarjeta",
+    valor: "5204164360110891",
+  },
 ];
+
+export const AMAZON_WISHLIST_URL = "https://www.amazon.com.mx/hz/wishlist/ls/2Y2P7BKUX933H?ref_=wl_share";

@@ -52,5 +52,5 @@ export function metaLine(dog: Dog): string {
 }
 
 export function showDonate(dog: Dog): boolean {
-  return dog.meta > 0 && dog.estado !== "adoptado";
+  return dog.estado !== "adoptado";
 }

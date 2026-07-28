@@ -4,16 +4,6 @@ import Image from "next/image";
 import { useDonateModal } from "@/components/donate/DonateModalContext";
 import type { Dog } from "@/lib/types";
 
-const money = (n: number): string => {
-  return "$" + (Number(n) || 0).toLocaleString("es-MX");
-};
-
-const pct = (dog: Pick<Dog, "meta" | "recaudado">): string => {
-  const m = Number(dog.meta) || 0;
-  if (m <= 0) return "0%";
-  return Math.min(100, Math.round((Number(dog.recaudado) || 0) / m * 100)) + "%";
-};
-
 interface DonacionesClientProps {
   sponsorDogs: Dog[];
 }
@@ -46,63 +36,41 @@ export default function DonacionesClient({
 
       {sponsorDogs.length > 0 ? (
         <div className="grid grid-cols-1 md2:grid-cols-2 lg:grid-cols-3 gap-5">
-          {sponsorDogs.map((dog) => {
-            const percentage = pct(dog);
-            return (
-              <div key={dog.id} className="bg-surface border border-border rounded-row p-4 flex gap-3.5 items-stretch">
-                {/* Photo */}
-                <div className="w-[82px] h-[82px] rounded-row flex-shrink-0 overflow-hidden">
-                  {dog.ahora ? (
-                    <Image
-                      src={dog.ahora}
-                      alt={dog.name}
-                      width={82}
-                      height={82}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-green-soft flex items-center justify-center text-sm font-bold text-green">
-                      🐾
-                    </div>
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 flex flex-col min-w-0">
-                  <div className="font-display font-extrabold text-base text-teal leading-tight mb-auto">
-                    {dog.name} · {dog.edad}
+          {sponsorDogs.map((dog) => (
+            <div key={dog.id} className="bg-surface border border-border rounded-row p-4 flex gap-3.5 items-stretch">
+              {/* Photo */}
+              <div className="w-[82px] h-[82px] rounded-row flex-shrink-0 overflow-hidden">
+                {dog.ahora ? (
+                  <Image
+                    src={dog.ahora}
+                    alt={dog.name}
+                    width={82}
+                    height={82}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-green-soft flex items-center justify-center text-sm font-bold text-green">
+                    🐾
                   </div>
-
-                  {/* Progress bar */}
-                  <div
-                    className="bg-border h-2.5 rounded-pill overflow-hidden my-2"
-                    role="progressbar"
-                    aria-valuenow={parseInt(percentage)}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                    aria-label={`Progreso: ${percentage} recaudado`}
-                  >
-                    <div
-                      className="h-full bg-green rounded-pill transition-all"
-                      style={{ width: percentage }}
-                    />
-                  </div>
-
-                  <div className="text-xs font-display font-bold text-text-muted mb-2.5">
-                    {money(dog.recaudado)} de {money(dog.meta)} recaudados
-                  </div>
-
-                  <button
-                    onClick={() => openDonate(dog.id, dog.name, 200)}
-                    className="self-start bg-teal text-white font-display font-extrabold text-xs px-4.5 py-2 rounded-pill hover:bg-teal-dark transition-colors cursor-pointer"
-                  >
-                    Donar a {dog.name}
-                  </button>
-                </div>
+                )}
               </div>
-            );
-          })}
+
+              {/* Content */}
+              <div className="flex-1 flex flex-col min-w-0">
+                <div className="font-display font-extrabold text-base text-teal leading-tight mb-auto">
+                  {dog.name} · {dog.edad}
+                </div>
+
+                <button
+                  onClick={() => openDonate(dog.id, dog.name, 200)}
+                  className="self-start bg-teal text-white font-display font-extrabold text-xs px-4.5 py-2 rounded-pill hover:bg-teal-dark transition-colors cursor-pointer mt-2.5"
+                >
+                  Donar a {dog.name}
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <div className="text-center py-12 px-5 text-text-muted bg-surface border-2 border-dashed border-border rounded-card">
